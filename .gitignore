@@ -1,0 +1,9 @@
+*.pyc
+.idea
+.ipynb_checkpoints
+*.bak
+*.swp
+*.DS_Store
+.cache
+.mypy_cache
+data/
