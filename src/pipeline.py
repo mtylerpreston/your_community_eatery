@@ -116,6 +116,62 @@ class CleanYelpData:
                 print('Reading tip data...\n')
                 self.tip_df = pd.read_json(file_name, lines=True)
 
+    def read_data_pd_low_memory(self, data_dir_path='data/', desired_data=['business', 'review'], chunksize=100000):
+
+        for item in desired_data:
+            file_name = data_dir_path + item + '.json'
+
+            if item == 'business':
+                '''
+                Given the low memory issue, this function will need to perform the full 
+                pipeline functionality at least for the specific use of this project.
+                Read business.json > clean business_df > drop unneeded columns >
+                    > drop nan rows > query to restaurants in AZ
+                This is needed in order for review to be able to save the relevant chunks.
+                '''
+                print('Reading business data...\n')
+                self.business_df = pd.read_json(file_name, lines=True)
+                # Make "star" columns unique on business_df and review_df to avoid confusion
+                self.business_df = self.business_df.rename(columns={"stars": "avg_stars"})
+
+                # Clean business_df
+                # Drop messy/unneeded columns
+                col_drop = ['attributes', 'hours', 'review_count', 'postal_code']
+                self.business_df.drop(columns=col_drop, inplace=True)
+
+                # Drop nan rows
+                self.business_df = self.business_df[~self.business_df.categories.isnull()]
+
+                # Query down to pertinent rows to save memory, this will modify
+                # self.business_df
+                self.query_business_review_geo_pd()
+
+            elif item == 'review':
+                print('Reading review data...\n')
+                # Read the data from json file in chunks, save to file if pertains to restaurant in AZ
+                reader = pd.read_json(file_name, lines=True, chunksize=chunksize)
+
+                for idx, chunk in enumerate(reader):
+                    # Make "star" columns unique on business_df and review_df to avoid confusion
+                    self.review_df = self.review_df.rename(columns={"stars": "review_stars"})
+
+                    # Merge chunk onto business_df to get the relevent rows, this creates
+                    # self.bus_review_df
+                    self.merge_chunks(chunk, idx)
+
+                    # Save relevant rows to a json file in a specific directory
+                    self.bus_review_df.to_json('data/chunks/chunk' + idx)
+
+            elif item == 'user':
+                print('Reading user data...\n')
+                self.user_df = pd.read_json(file_name, lines=True)
+            elif item == 'checkin':
+                print('Reading checkin data...\n')
+                self.checkin_df = pd.read_json(file_name, lines=True)
+            else:
+                print('Reading tip data...\n')
+                self.tip_df = pd.read_json(file_name, lines=True)
+
     def close_spark(self):
         # End the spark session to free up memory
         self.spark.close()
@@ -151,6 +207,14 @@ class CleanYelpData:
         self.business_df = self.business_df[self.business_df.state == desired_geo]
         self.business_df = self.business_df[self.business_df.categories.str.contains('Restaurants')]
 
+    def merge_chunks(self, chunk, idx):
+        # Merge business and review df's
+        self.bus_review_df = pd.merge(self.chunk, self.business_df, on='business_id', how='left')
+
+        # Drop duplicated business id column
+        self.bus_review_df = self.bus_review_df.drop(self.bus_review_df.business_id_r)
+
+    def merge_data_frame(self):
         # merge business and review df's
         bus_review_df = pd.merge(self.review_df, self.business_df, on='business_id', how='left')
 
@@ -167,27 +231,6 @@ class CleanYelpData:
         self.bus_review_df = self.bus_review_df.select("*").toPandas()
         close_spark()
 
-    def get_train_test_data(self):
-        '''
-        train/test split for the numerified dataset
-        No parameters
-        returns: same as sklearn train_test_split
-        '''
-        X = self.X
-        y = self.DF['label']
-        return train_test_split(X, y, stratify=y, random_state=42)
-
-    def preprocessing(df):
-        '''
-        creates model prediction input from a pandas df
-        (for use on incoming cases)
-        This redirects to 'create_numerified_data 
-        (so the webserver code did not need to be changed)
-        Parameters: Pandas DF 
-        returns: Pandas DF
-        '''
-        return create_numerified_df(df)
-
 
 if __name__ == '__main__':
     # pipe = CleanYelpData()
@@ -201,5 +244,6 @@ if __name__ == '__main__':
     pipe.read_data()
     print('Querying data...\n')
     pipe.query_business_review_geo()
+    pipe.merge_data_frame()
     print(type(pipe.bus_review_df))
     pipe.persist_test_set()
