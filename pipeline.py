@@ -102,19 +102,19 @@ class CleanYelpData:
                 self.business_df = self.business_df.rename(columns={"stars": "avg_stars"})
             elif item == 'review':
                 print('Reading review data...\n')
-                self.review_df = pd.read_json(file_name, lines = True)
+                self.review_df = pd.read_json(file_name, lines=True)
                 # Make "star" columns unique on business_df and review_df to avoid confusion
                 self.review_df = self.review_df.rename(columns={"stars": "review_stars"})
                 self.review_df = self.review_df.rename(columns={"business_id": "business_id"})
             elif item == 'user':
                 print('Reading user data...\n')
-                self.user_df = pd.read_json(file_name, lines = True)
+                self.user_df = pd.read_json(file_name, lines=True)
             elif item == 'checkin':
                 print('Reading checkin data...\n')
-                self.checkin_df = pd.read_json(file_name, lines = True)
+                self.checkin_df = pd.read_json(file_name, lines=True)
             else:
                 print('Reading tip data...\n')
-                self.tip_df = pd.read_json(file_name, lines = True)
+                self.tip_df = pd.read_json(file_name, lines=True)
 
     def close_spark(self):
         # End the spark session to free up memory
@@ -148,6 +148,9 @@ class CleanYelpData:
                                                  how='left')
         # Drop duplicated business id column
         self.bus_review_df = self.bus_review_df.drop(self.bus_review_df.business_id_r)
+
+    def pickle_test_set(self, path='data/bus_review_df.pkl'):
+        self.bus_review_df.to_pickle(path)
 
     def convert_spark_to_pandas(self):
         self.bus_review_df = self.bus_review_df.select("*").toPandas()
@@ -188,3 +191,4 @@ if __name__ == '__main__':
     print('Querying data...\n')
     pipe.query_business_review_geo()
     print(type(pipe.bus_review_df))
+    pipe.pickle_test_set()
