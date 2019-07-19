@@ -97,24 +97,24 @@ class CleanYelpData:
 
             if item == 'business':
                 print('Reading business data...\n')
-                self.business_df = pd.read_json(file_name, lines=True)
+                self.business_df = pd.read_json(file_name)
                 # Make "star" columns unique on business_df and review_df to avoid confusion
                 self.business_df = self.business_df.rename(columns={"stars": "avg_stars"})
             elif item == 'review':
                 print('Reading review data...\n')
-                self.review_df = pd.read_json(file_name, lines=True)
+                self.review_df = pd.read_json(file_name)
                 # Make "star" columns unique on business_df and review_df to avoid confusion
                 self.review_df = self.review_df.rename(columns={"stars": "review_stars"})
                 self.review_df = self.review_df.rename(columns={"business_id": "business_id"})
             elif item == 'user':
                 print('Reading user data...\n')
-                self.user_df = pd.read_json(file_name, lines=True)
+                self.user_df = pd.read_json(file_name)
             elif item == 'checkin':
                 print('Reading checkin data...\n')
-                self.checkin_df = pd.read_json(file_name, lines=True)
+                self.checkin_df = pd.read_json(file_name)
             else:
                 print('Reading tip data...\n')
-                self.tip_df = pd.read_json(file_name, lines=True)
+                self.tip_df = pd.read_json(file_name)
 
     def close_spark(self):
         # End the spark session to free up memory
