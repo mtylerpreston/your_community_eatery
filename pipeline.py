@@ -185,7 +185,7 @@ if __name__ == '__main__':
     # pipe.convert_spark_to_pandas()
     # print(type(pipe.bus_review_df))
 
-    pipe = CleanYelpData(use_spark=True)
+    pipe = CleanYelpData(use_spark=False)
     print('Reading in data from json files...\n')
     pipe.read_data()
     print('Querying data...\n')
