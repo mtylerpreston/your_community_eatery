@@ -139,6 +139,14 @@ class CleanYelpData:
         self.bus_review_df = self.bus_review_df.drop(self.bus_review_df.business_id_r)
 
     def query_business_review_geo_pd(self, desired_geo='AZ'):
+        # Clean business_df
+        # Drop messy/unneeded columns
+        col_drop = ['attributes', 'hours', 'review_count', 'postal_code']
+        self.business_df.drop(columns=col_drop, inplace=True)
+
+        # Drop nan rows
+        self.business_df = self.business_df[~self.business_df.categories.isnull()]
+
         # Filter business_df down to only businesses in Arizona
         self.business_df = self.business_df[self.business_df.state == desired_geo]
         self.business_df = self.business_df[self.business_df.categories.str.contains('Restaurants')]
@@ -149,8 +157,11 @@ class CleanYelpData:
         # Drop duplicated business id column
         self.bus_review_df = self.bus_review_df.drop(self.bus_review_df.business_id_r)
 
-    def pickle_test_set(self, path='data/bus_review_df.pkl'):
-        self.bus_review_df.to_pickle(path)
+    def persist_test_set(self, path='data/bus_review_df.pkl'):
+        try:
+            self.bus_review_df.to_json(path)
+        except:
+            self.bus_review_df.to_pickle(path)
 
     def convert_spark_to_pandas(self):
         self.bus_review_df = self.bus_review_df.select("*").toPandas()
@@ -191,4 +202,4 @@ if __name__ == '__main__':
     print('Querying data...\n')
     pipe.query_business_review_geo()
     print(type(pipe.bus_review_df))
-    pipe.pickle_test_set()
+    pipe.persist_test_set()
