@@ -151,9 +151,9 @@ class CleanYelpData:
         self.business_df = self.business_df[self.business_df.state == desired_geo]
         self.business_df = self.business_df[self.business_df.categories.str.contains('Restaurants')]
 
-        # Join business and review df's
-        self.bus_review_df = self.review_df.join(self.business_df, on='business_id',
-                                                 how='left')
+        # merge business and review df's
+        bus_review_df = pd.merge(sample_df, business_df, on='business_id', how='left')
+
         # Drop duplicated business id column
         self.bus_review_df = self.bus_review_df.drop(self.bus_review_df.business_id_r)
 
