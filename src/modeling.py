@@ -71,7 +71,7 @@ for algorithm in [SVD(), surprise.SlopeOne(), surprise.NMF(),
     results = cross_validate(algorithm, data, measures=['RMSE', 'MAE'], cv=5, verbose=True)
 
     # Get string of algname for naming a pickle file a useful name
-    alg_name = str(alg)
+    alg_name = str(algorithm)
     alg_name = alg_name[alg_name.find('.') + 1:]
     alg_name = alg_name[alg_name.find('.') + 1:]
     alg_name = alg_name[alg_name.find('.') + 1:]
