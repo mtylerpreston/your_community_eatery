@@ -68,7 +68,16 @@ for algorithm in [SVD(), surprise.SlopeOne(), surprise.NMF(),
 
     # Take a look at cross validation results to compare model types
     print('Modeling: {}'.format(str(algorithm)))
-    cross_validate(algorithm, data, measures=['RMSE', 'MAE'], cv=5, verbose=True)
+    results = cross_validate(algorithm, data, measures=['RMSE', 'MAE'], cv=5, verbose=True)
+
+    # Get string of algname for naming a pickle file a useful name
+    alg_name = str(alg)
+    alg_name = alg_name[alg_name.find('.') + 1:]
+    alg_name = alg_name[alg_name.find('.') + 1:]
+    alg_name = alg_name[alg_name.find('.') + 1:]
+    alg_name = alg_name[:alg_name.find('object') - 1]
+
+    pickle.dump(results, open("../model_results/{}.pkl".format(alg_name), "wb"))
 
 
 #     # fit the model
