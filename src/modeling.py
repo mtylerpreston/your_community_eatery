@@ -37,11 +37,10 @@ print('Mapping to unique ids')
 df['i_business_id'] = pd.factorize(df.business_id)[0]
 df['i_user_id'] = pd.factorize(df.user_id)[0]
 
-train_df.drop(columns=['cool', 'date', 'review_id', 'categories', 'city',
-                       'is_open', 'latitude', 'longitude', 'name', 'state',
-                       'funny', 'text', 'useful', 'avg_stars', 'address',
-                       'user_id', 'business_id'],
-              inplace=True)
+train_df = df.drop(columns=['cool', 'date', 'review_id', 'categories', 'city',
+                            'is_open', 'latitude', 'longitude', 'name', 'state',
+                            'funny', 'text', 'useful', 'avg_stars', 'address',
+                            'user_id', 'business_id'])
 
 # #Train test split for production models
 # y = df['stars']
