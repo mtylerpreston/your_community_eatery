@@ -23,7 +23,7 @@ import pickle
 # Housekeeping
 from io import StringIO
 
-test = True
+test = False
 
 print('Reading file')
 df = pd.read_json('../data/bus_review_df.json', orient='records')
