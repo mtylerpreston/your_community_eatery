@@ -78,6 +78,7 @@ for algorithm in [SVD(), surprise.SlopeOne(), surprise.NMF(),
                   surprise.CoClustering()]:
 
     # Take a look at cross validation results to compare model types
+    print('Modeling: {}'.format(str(algirthm)))
     cross_validate(algorithm, data, measures=['RMSE', 'MAE'], cv=5, verbose=True)
 
 
