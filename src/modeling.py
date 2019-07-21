@@ -23,21 +23,21 @@ import pickle
 # Housekeeping
 from io import StringIO
 
-test = True
+test = False
 
 if test:
     # Only taking a small sample for testing
     print('Reading file')
     reader = pd.read_json('../data/bus_review_df.json',
-                          orient='records',
                           lines=True,
                           chunksize=1000)
-
+    print(type(reader))
+    print('Taking chunk from file')
     for df in reader:
-        print('Taking chunk from file')
         df = df
         break
 else:
+    print('Reading file')
     df = pd.read_json('../data/bus_review_df.json', orient='records')
 
 # Map user and business ids to numbers
