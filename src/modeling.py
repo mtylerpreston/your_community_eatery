@@ -23,9 +23,35 @@ import pickle
 # Housekeeping
 from io import StringIO
 
-df = pd.read_json('../data/bus_review_df.json', orient='records')
-df.drop(columns=['cool', 'date', 'review_id',
-                 'funny', 'text', 'useful'], inplace=True)
+test = True
+
+if test:
+    # Only taking a small sample for testing
+    print('Reading file')
+    reader = pd.read_json('../data/bus_review_df.json',
+                          orient='records',
+                          lines=True,
+                          chunksize=1000)
+
+    for df in reader:
+        print('Taking chunk from file')
+        df = df
+        break
+else:
+    df = pd.read_json('../data/bus_review_df.json', orient='records')
+
+# Map user and business ids to numbers
+print('Mapping to unique ids')
+df['i_business_id'] = pd.factorize(df.business_id)[0]
+df['i_user_id'] = pd.factorize(df.user_id)[0]
+print(df.i_user_id)
+
+
+train_df.drop(columns=['cool', 'date', 'review_id', 'categories', 'city',
+                       'is_open', 'latitude', 'longitude', 'name', 'state',
+                       'funny', 'text', 'useful', 'avg_stars', 'address',
+                       'user_id', 'business_id'],
+              inplace=True)
 
 # #Train test split for production models
 # y = df['stars']
@@ -36,9 +62,10 @@ df.drop(columns=['cool', 'date', 'review_id',
 # identifier_df_train = X_train[['user_id', 'business_id']]
 # identifier_df_test = X_test[['user_id', 'business_id']]
 
+
 # A reader is needed but only the rating_scale param is requiered.
 reader = Reader(rating_scale=(1, 5))
-data = Dataset.load_from_df(df, reader)
+data = Dataset.load_from_df(train_df, reader)
 
 all_predictions = []
 all_ratings = []
@@ -46,8 +73,8 @@ all_ratings = []
 # Iterate over all algorithms
 for algorithm in [SVD(), surprise.SlopeOne(), surprise.NMF(),
                   surprise.NormalPredictor(), surprise.KNNBaseline(),
-                  surprise.KNNBasic(), surprise.KNNWithMeans(),
-                  surprise.KNNWithZScore(), surprise.BaselineOnly(),
+                  # surprise.KNNBasic(), surprise.KNNWithMeans(),
+                  # surprise.KNNWithZScore(), surprise.BaselineOnly(),
                   surprise.CoClustering()]:
 
     # Take a look at cross validation results to compare model types

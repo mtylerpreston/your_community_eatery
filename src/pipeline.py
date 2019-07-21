@@ -173,6 +173,7 @@ class CleanYelpData:
         for chunk in os.listdir('data/chunks/'):
             if chunk.endswith(".json") and chunk.startswith('chunk'):
                 self.bus_review_df = self.bus_review_df.append(pd.read_json('data/chunks/' + chunk))
+        return self.bus_review_df
 
     def close_spark(self):
         # End the spark session to free up memory
