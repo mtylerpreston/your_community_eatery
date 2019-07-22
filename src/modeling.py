@@ -1,12 +1,5 @@
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-
-# # Spark library and functions
-# import pyspark as ps
-# import pyspark.sql.types as types
-# from pyspark.sql.functions import col, countDistinct
-# from pyspark.sql.functions import to_timestamp
 
 # Sklearn Modeling
 from sklearn.model_selection import train_test_split
@@ -15,7 +8,7 @@ from sklearn.model_selection import train_test_split
 from surprise import SVD
 import surprise
 from surprise import Dataset, Reader
-from surprise.model_selection import cross_validate
+from surprise.model_selection import cross_validate, GridSearchCV
 
 # Persistance
 import pickle
@@ -58,50 +51,47 @@ df = None
 
 # A reader is needed but only the rating_scale param is requiered.
 reader = Reader(rating_scale=(1, 5))
-data = Dataset.load_from_df(train_df, reader)
+train_set = Dataset.load_from_df(train_df, reader)
 
-all_predictions = []
-all_ratings = []
+# Perform gridsearch
+algorithm = SVD
 
-# Iterate over all algorithms
-for algorithm in [
-        SVD(),
-        surprise.SlopeOne(),
-        surprise.NMF(),
-        surprise.NormalPredictor(),
-        surprise.BaselineOnly(),
-        surprise.CoClustering()]:
+if test:
+    parameters_grid = {'n_factors': [50, 100],
+                       'n_epochs': [10, 20],
+                       'lr_all': [.005],
+                       'reg_all': [.01],
+                       'random_state': [2]}
+else:
+    parameters_grid = {'n_factors': [50, 100, 150, 200],
+                       'n_epochs': [10, 20, 40, 80],
+                       'lr_all': [.001, .005, .01],
+                       'reg_all': [.005, .002, .006, .01],
+                       'random_state': [2]}
 
-    # Take a look at cross validation results to compare model types
-    print('Modeling: {}'.format(str(algorithm)))
-    results = cross_validate(algorithm, data, measures=['RMSE', 'MAE'], cv=5, verbose=True)
-
-    # Get string of algname for naming a pickle file a useful name
-    alg_name = str(algorithm)
-    alg_name = alg_name[alg_name.find('.') + 1:]
-    alg_name = alg_name[alg_name.find('.') + 1:]
-    alg_name = alg_name[alg_name.find('.') + 1:]
-    alg_name = alg_name[:alg_name.find('object') - 1]
-
-    pickle.dump(results, open("../model_results/{}.pkl".format(alg_name), "wb"))
+grid = GridSearchCV(algo_class=algorithm,
+                    param_grid=parameters_grid,
+                    cv=3,
+                    n_jobs=-1,
+                    joblib_verbose=2)
+grid.fit(train_set)
 
 
-#     # fit the model
-#     alg_name = str(algorithm)[str(algorithm).find('ization')+8 : str(algorithm).find('obj')-1]
-#     print('Fitting algorithm {}'.format(alg_name))
-#     algorithm.fit(train_set)
+# Print best params and result
 
-#     # run predictions over
-#     print('Predicting algorithm {}'.format(alg_name))
-#     model_predictions = []
-#     model_ratings = []
-#     for idx, row in X_test.iterrows():
-#         prediction = algorithm.predict(row[0], row[1])
-#         model_predictions.append(prediction)
-#         model_ratings.append(prediction[3])
 
-#     # Pickle the models
-#     pred_pkl_file = alg_name + '_predictions.pkl'
-#     ratings_pkl_file = alg_name + '_ratings.pkl'
-#     pickle.dump(model_predictions, open(pred_pkl_file, 'wb'))
-#     pickle.dump(model_ratings, open(ratings_pkl_file, 'wb'))
+# Pickle the best model, params, and result
+model_file = '../models/top_grid_SVD_model1.pkl'
+param_file = '../model_results/top_grid_SVD_params.pkl'
+score_file = '../model_results/top_grid_SVD_score.pkl'
+
+try:
+    print(grid.best_estimator['rmse'])
+    pickle.dump(grid.best_estimator['rmse'], open(model_file, 'wb'))
+except:
+    print('Failed to pickle model.')
+
+print(grid.best_params['rmse'])
+pickle.dump(grid.best_params['rmse'], open(param_file, 'wb'))
+print(grid.best_score['rmse'])
+pickle.dump(grid.best_score['rmse'], open(score_file, 'wb'))
