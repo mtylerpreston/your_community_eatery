@@ -63,8 +63,8 @@ if test:
                        'reg_all': [.01],
                        'random_state': [2]}
 else:
-    parameters_grid = {'n_factors': [50, 100, 150, 200],
-                       'n_epochs': [10, 20, 40, 80],
+    parameters_grid = {'n_factors': [25, 50, 100, 150, 200],
+                       'n_epochs': [10, 20, 50, 100],
                        'lr_all': [.001, .005, .01],
                        'reg_all': [.005, .002, .006, .01],
                        'random_state': [2]}
