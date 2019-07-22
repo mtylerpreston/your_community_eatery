@@ -65,9 +65,12 @@ all_ratings = []
 
 # Iterate over all algorithms
 for algorithm in [
-        # SVD(), surprise.SlopeOne(), surprise.NMF(),
-        # surprise.NormalPredictor(),
-        surprise.BaselineOnly(), surprise.CoClustering()]:
+        SVD(),
+        surprise.SlopeOne(),
+        surprise.NMF(),
+        surprise.NormalPredictor(),
+        surprise.BaselineOnly(),
+        surprise.CoClustering()]:
 
     # Take a look at cross validation results to compare model types
     print('Modeling: {}'.format(str(algorithm)))
