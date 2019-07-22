@@ -23,7 +23,7 @@ import pickle
 # Housekeeping
 from io import StringIO
 
-test = False
+test = True
 
 print('Reading file')
 df = pd.read_json('../data/trimmed_df.json', orient='records')
@@ -37,10 +37,14 @@ print('Mapping to unique ids')
 df['i_business_id'] = pd.factorize(df.business_id)[0]
 df['i_user_id'] = pd.factorize(df.user_id)[0]
 
-train_df = df.drop(columns=['cool', 'date', 'review_id', 'categories', 'city',
-                            'is_open', 'latitude', 'longitude', 'name', 'state',
-                            'funny', 'text', 'useful', 'avg_stars', 'address',
-                            'user_id', 'business_id'])
+# Take the necessary data from the df in the order that we need to pass to surprise
+train_df = pd.DataFrame()
+train_df['i_user_id'] = df['i_user_id']
+train_df['i_business_id'] = df['i_business_id']
+train_df['review_stars'] = df['review_stars']
+
+# Wipe original df to save memory, for now
+df = None
 
 # #Train test split for production models
 # y = df['stars']
