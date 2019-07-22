@@ -1,0 +1,49 @@
+
+<!-- What the page is called in the tab bar  -->
+<!-- We will add out stylsheet here later -->
+<head>
+    <link rel="stylesheet" href="/static/home.css" />
+    <title> Home Page</title>
+</head>
+
+<body>
+  <h1 id='HomeHeader'>Welcome To Our Team: Fraudify!
+    <div style="font-size: 15pt; text-align: center;">Data Driven Fraud Detection</div>
+  </h1>
+
+</p>
+  <p id='HomeHeader2'><span style="font-family: helvetica;font-style: bold; font-size: 23px;">Discover instant benefits:</span><br>
+      - Prevent unnecessary losses due to fraudulent activity <br>
+      - Maximize the impact of your fraud investigation efforts<br>
+      - Improve customer satisfaction with automated approval of low risk events<br>
+  </p>
+      <p style="float: left; font-size: 15pt; text-align: center; width: 10%; margin-left: 20%; margin-right: 2%; margin-bottom: 0.5em;"><img src="https://avatars0.githubusercontent.com/u/28331196?s=460&v=4" style="width: 100%"><a href="https://www.linkedin.com/in/claudio-staub/">Claudio Staub</a></p>
+      <p style="float: left; font-size: 15pt; text-align: center; width: 10%; margin-right: 2%; margin-bottom: 0.5em;"><img src="https://avatars3.githubusercontent.com/u/37880776?s=400&v=4" style="width: 100%"><a href="https://www.linkedin.com/in/1danielvega/">Daniel Vega</a></p>
+      <p style="float: left; font-size: 15pt; text-align: center; width: 10%; margin-right: 2%; margin-bottom: 0.5em;"><img src="https://avatars3.githubusercontent.com/u/46656667?s=400&v=4" style="width: 100%"><a href="https://www.linkedin.com/in/sheng902/">Karen Sheng</a></p>
+      <p style="float: left; font-size: 15pt; text-align: center; width: 10%; margin-right: 2%; margin-bottom: 0.5em;"><img src="https://avatars1.githubusercontent.com/u/49414102?s=400&v=4" style="width: 100%"><a href="https://www.linkedin.com/in/franz-mornau/">Franz Mornau</a></p>
+      <p style="float: left; font-size: 15pt; text-align: center; width: 10%; margin-right: 20%; margin-bottom: 0.5em;"><img src="https://avatars0.githubusercontent.com/u/41130576?s=400&v=4"style="width: 100%"><a href="https://www.linkedin.com/in/tyler-preston-0643ba29/">Tyler Preston</a></p><p style="clear: both;">
+  </p>
+  <div>
+    <p style="font-size: 20pt; text-align: center;">Try out our fraud detector!</p>
+    <li>
+      <a href="https://github.com/karensheng/fraud-detection-case-study.git">GitHub</a>
+    </li>
+    <li>
+      <a href="/fraud">Map</a>
+    </li>
+    <iframe width="700" height="600" frameborder="0" scrolling="no" src="//plot.ly/dashboard/withwithout:371/embed"></iframe><iframe width="700" height="600" frameborder="0" scrolling="no" src="//plot.ly/dashboard/withwithout:370/embed"></iframe>
+	</div>
+  <div id="controls" style="width-left: 20%;width-right:20%;">
+    <div>
+      <label style="font-size: 20pt; text-align: left;">Test the Model</label><br>
+      <button id='prediction'>Predict</button>
+    </div>
+        <div>
+        <input id='output' type='text' readonly/>
+      </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/1.35.2/plotly.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="/static/home.js"></script>
+</body>
+</html>

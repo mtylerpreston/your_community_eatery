@@ -1,0 +1,59 @@
+body {
+    background-color: white;
+}
+#HomeHeader {
+font-family: helvetica;
+color: rgb(161, 228, 255);
+margin-top: 70px;
+text-align: center;
+}
+#HomeHeader2 {
+	font-family: helvetica;
+    font-size: 20px;
+    text-align: center;
+	background-color: rgb(161, 228, 255);
+	border: 3px dashed white;
+	margin: 25px;
+	padding: 25px;
+
+}
+img {
+    height: 150px;
+    width: 150px;
+    display: block;
+    float: left;
+    margin-right: 1%;
+}
+li {
+
+    font-family: helvetica;
+    font-size: 20px;
+    text-align: center;
+}
+span {
+	font-family: helvetica;
+	font-size: 15px;
+	text-align: center;
+}
+#controls {
+    background-color: rgb(161, 228, 255);
+    border: 3px dashed white;
+    margin: 25px;
+    padding: 25px;
+    font-family: helvetica;
+    font-size: 15px;
+    text-align: center;
+}
+input {
+    background-color: white;
+    border: 1px solid white;
+    height: 100px;
+    width: 500px;
+    
+}
+#prediction {
+    background-color: white;
+    border: 1px solid grey;
+    margin: 10px;
+    padding: 10px;
+}
