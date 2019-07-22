@@ -26,7 +26,7 @@ from io import StringIO
 test = False
 
 print('Reading file')
-df = pd.read_json('../data/bus_review_df.json', orient='records')
+df = pd.read_json('../data/trimmed_df.json', orient='records')
 
 # take a small sample for testing
 if test:
