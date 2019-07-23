@@ -67,7 +67,7 @@ else:
     parameters_grid = {'n_factors': [3, 5, 10, 15, 20, 25],
                        'n_epochs': [10, 20, 50, 100],
                        'lr_all': [.001, .005, .01],
-                       'reg_all': [.005, .002, .006, .01],
+                       'reg_all': [.005, .01, .02, .05],
                        'random_state': [2],
                        'verbose': [True]}
 
