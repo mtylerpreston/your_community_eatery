@@ -16,7 +16,7 @@ import pickle
 # Housekeeping
 from io import StringIO
 
-test = True
+test = False
 
 print('Reading file')
 df = pd.read_json('../data/trimmed_df.json', orient='records')
@@ -56,32 +56,51 @@ train_set = Dataset.load_from_df(train_df, reader)
 # Perform gridsearch
 algorithm = surprise.KNNBaseline
 bsl_options = {'method': ['als', 'sgd'],
-               'reg': [1, 2]},
-sim_options1 = {'name': ['cosine', 'msd', 'pearson', 'pearson_baseline'],
-                'min_support': [1, 3, 5],
-                'user_based': [False]}
+               'reg': [1, 2]}
+sim_options = {'name': ['cosine', 'msd', 'pearson', 'pearson_baseline'],
+               'min_support': [1, 3, 5],
+               'user_based': [False],
+               'shrinkage': [50, 100]}
 
 if test:
-    parameters_grid = {'n_factors': [50, 100],
-                       'n_epochs': [10, 20],
-                       'lr_all': [.005],
-                       'reg_all': [.01],
-                       'random_state': [2],
-                       'verbose': [True],
-                       }
+    parameters_grid = {
+        # KNN parameters
+        'k': [25, 50],
+        'min_k': [2, 4],
+        'bsl_options': bsl_options,
+        'sim_options': {'name': ['cosine'],
+                        'user_based': [False]},
+
+        # Matrix Factorization Parameters
+        # 'n_factors': [50, 100],
+        # 'n_epochs': [10, 20],
+        # 'lr_all': [.005],
+        # 'reg_all': [.01],
+
+        'random_state': [2],
+        # 'verbose': [True]
+    }
 else:
-    parameters_grid = {'n_factors': [1, 2, 3, 4, 5],
-                       'n_epochs': [50, 100, 150, 200],
-                       'lr_all': [.001, .003],
-                       'reg_all': [.02, .05, .1],
-                       'random_state': [2],
-                       'bsl_options': bsl_options,
-                       'sim_options': sim_options,
-                       'verbose': [True]}
+    parameters_grid = {
+        # KNN parameters
+        'k': [15, 25, 50, 75, 100],
+        'min_k': [1, 2, 3, 4],
+        'bsl_options': bsl_options,
+        'sim_options': sim_options,
+
+        # Matrix Factorization Parameters
+        # 'n_factors': [1, 2, 3, 4, 5],
+        # 'n_epochs': [50, 100, 150, 200],
+        # 'lr_all': [.001, .003],
+        # 'reg_all': [.02, .05, .1],
+
+        'random_state': [2],
+        # 'verbose': [True]
+    }
 
 grid = GridSearchCV(algo_class=algorithm,
                     param_grid=parameters_grid,
-                    cv=3,
+                    cv=4,
                     n_jobs=-1,
                     joblib_verbose=2)
 grid.fit(train_set)
