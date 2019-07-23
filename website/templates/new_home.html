@@ -59,9 +59,10 @@ h1, h2, h3, h4, h5, h6 {
     <div class="w3-col l6 w3-padding-small">
       <h1 class="w3-center">Recommendations</h1><br>
       <h4>Please rate four restaurants:</h4>
+      <p>(Think of the rating as you would the number of stars that you give a restaurant as a review on Yelp. They can all be 5's or 1's or any combination.)</p>
 
       <!-- Drop down selection for retaurants - Pick 1-->
-      <form action="/action_page.php">
+      <form action="/recommendation">
         <select name="pick1">
 
           <!-- Low prices $ -->
@@ -339,7 +340,7 @@ h1, h2, h3, h4, h5, h6 {
   <hr>
 
   <!-- Profiling Section -->
-  <div class="w3-row w3-padding-64" id="results">
+  <div class="w3-row w3-padding-64" id="user_profiles">
     <div class="w3-col l6 w3-padding-large">
       <h1 class="w3-center">Unveiling User Profiles</h1><br>
       <h4>Some results regarding model prediction performance...</h4>
@@ -355,7 +356,7 @@ h1, h2, h3, h4, h5, h6 {
     </div>
     
     <div class="w3-col l6 w3-padding-large">
-      <img src="/w3images/tablesetting.jpg" class="w3-round w3-image w3-opacity-min" alt="Menu" style="width:100%">
+      <img src="/static/images/kitchen_plating.jpg" class="w3-round w3-image w3-opacity-min" alt="Menu" style="width:100%">
     </div>
   </div>
 
@@ -369,5 +370,6 @@ h1, h2, h3, h4, h5, h6 {
   <p>An <a href="https://github.com/mtylerpreston" title="Tyler Preston Github" target="_blank" class="w3-hover-text-green">M. Tyler Preston</a> Project</p>
 </footer>
 
+<script src="/static/mpg.js"></script>
 </body>
 </html>

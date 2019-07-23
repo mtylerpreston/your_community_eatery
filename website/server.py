@@ -21,13 +21,13 @@ def hello():
 
 client = a.EventAPIClient()
 
-# model = pickle.load(open('website/lr_model.pkl','rb'))
+# model = pickle.load(open('../models/website/lr_model.pkl', 'rb'))
 
 
-@app.route('/score', methods=['POST'])
+@spp.route('/recommendation', methods=['POST'])
 def score():
-    response = client.get_data()
-    processed_response = preprocessing(response)
+    req = request.get_json()
+    c, h, w = req['cylinders'], req['horsepower'], req['weight']
     predictions = model.predict_proba(processed_response)
     lst = []
     for e, i in enumerate(predictions):
