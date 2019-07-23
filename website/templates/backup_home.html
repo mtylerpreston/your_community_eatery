@@ -62,7 +62,7 @@ h1, h2, h3, h4, h5, h6 {
       <p>(Think of the rating as you would the number of stars that you give a restaurant as a review on Yelp. They can all be 5's or 1's or any combination.)</p>
 
       <!-- Drop down selection for retaurants - Pick 1-->
-      <form action="/recommendation">
+      <form action="/recommend", method='post'>
         <select name="pick1">
 
           <!-- Low prices $ -->
@@ -300,7 +300,8 @@ h1, h2, h3, h4, h5, h6 {
 
         <br><br>
         <h4>Your recommendations await:</h4>
-        <input type="submit" id='recommend' style="font-size: 15pt; text-align: center" value="Get Recommendations">
+        <button id="recommend">Get Recommendations</button>
+        <!-- <input type="submit" id='recommend' style="font-size: 15pt; text-align: center" value="Get Recommendations"> -->
         <!-- <input type="submit"> -->
       </form>
 
@@ -369,7 +370,7 @@ h1, h2, h3, h4, h5, h6 {
 <footer class="w3-center w3-light-grey w3-padding-32">
   <p>An <a href="https://github.com/mtylerpreston" title="Tyler Preston Github" target="_blank" class="w3-hover-text-green">M. Tyler Preston</a> Project</p>
 </footer>
-
-<script src="/static/mpg.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="static/home.js"></script>
 </body>
 </html>
