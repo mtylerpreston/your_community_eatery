@@ -61,13 +61,15 @@ if test:
                        'n_epochs': [10, 20],
                        'lr_all': [.005],
                        'reg_all': [.01],
-                       'random_state': [2]}
+                       'random_state': [2],
+                       'verbose': [True]}
 else:
-    parameters_grid = {'n_factors': [25, 50, 100, 150, 200],
+    parameters_grid = {'n_factors': [3, 5, 10, 15, 20, 25],
                        'n_epochs': [10, 20, 50, 100],
                        'lr_all': [.001, .005, .01],
-                       'reg_all': [.005, .002, .006, .01],
-                       'random_state': [2]}
+                       'reg_all': [.005, .01, .02, .05],
+                       'random_state': [2],
+                       'verbose': [True]}
 
 grid = GridSearchCV(algo_class=algorithm,
                     param_grid=parameters_grid,
