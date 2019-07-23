@@ -64,10 +64,10 @@ if test:
                        'random_state': [2],
                        'verbose': [True]}
 else:
-    parameters_grid = {'n_factors': [3, 5, 10, 15, 20, 25],
-                       'n_epochs': [10, 20, 50, 100],
-                       'lr_all': [.001, .005, .01],
-                       'reg_all': [.005, .01, .02, .05],
+    parameters_grid = {'n_factors': [1, 2, 3, 4, 5],
+                       'n_epochs': [50, 100, 150, 200],
+                       'lr_all': [.001, .003],
+                       'reg_all': [.02, .05, .1],
                        'random_state': [2],
                        'verbose': [True]}
 
@@ -83,9 +83,9 @@ grid.fit(train_set)
 
 
 # Pickle the best model, params, and result
-model_file = '../models/top_grid_SVD_model1.pkl'
-param_file = '../model_results/top_grid_SVD_params.pkl'
-score_file = '../model_results/top_grid_SVD_score.pkl'
+model_file = '../models/top_grid_SVD_model2.pkl'
+param_file = '../model_results/top_grid_SVD_params2.pkl'
+score_file = '../model_results/top_grid_SVD_score2.pkl'
 
 try:
     print(grid.best_estimator['rmse'])
