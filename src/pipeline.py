@@ -9,7 +9,7 @@ from sklearn.model_selection import train_test_split
 import os
 
 
-class CleanYelpData:
+class YourCommunityEatery:
     '''
     data pipeline for fraud detector case study
     holds full dataframe and numerified data
