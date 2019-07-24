@@ -4,9 +4,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-
-def build_item_map():
-    business_ids = [df.business_id[df.name.str.contains("Chick-fil-A")].iloc[0],
+def build_item_map(df):
+    '''
+    Takes in a dataframe with fields business_id, name, and i_business_id (the item 
+    number for surprise), and returns a dictionary with business_id's as keys and 
+    tuples containing the name and i_business_id as values based on the subset of
+    restaurants that were selected for the website demo. These restaurants were
+    hard coded specifically for this implementation of the website. 
+    '''
+    business_ids = [df.business_id[df.name.str.match("The Stand")].iloc[0],
+                    df.business_id[df.name.str.contains("Chick-fil-A")].iloc[0],
                     df.business_id[df.name.str.contains("In-N-Out")].iloc[0],
                     df.business_id[df.name.str.contains("Shake Shack")].iloc[0],
                     df.business_id[df.name.str.contains("Whataburger")].iloc[0],
@@ -31,9 +38,9 @@ def build_item_map():
                     df.business_id[df.name.str.contains("Morton's The Steakhouse")].iloc[0]]
     names = df.name[df.business_id.isin(business_ids)].unique()
     i_business_ids = df.i_business_id[df.business_id.isin(business_ids)].unique()
-    
+
     item_map = {}
     for item in business_ids:
-        item_map[item] = (df.name[df.business_id.str.match(item)].unique()[0], 
-                           df.i_business_id[df.business_id.str.match(item)].unique()[0])
-    return item_dict
+        item_map[item] = (df.name[df.business_id.str.match(item)].unique()[0],
+                          df.i_business_id[df.business_id.str.match(item)].unique()[0])
+    return item_map
