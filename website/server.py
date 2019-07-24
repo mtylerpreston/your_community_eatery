@@ -27,15 +27,15 @@ client = a.EventAPIClient()
 @app.route('/recommend', methods=['POST'])
 def recommend():
     req = request.get_json()
-    print(req)
-    # p1, r1 = req['pick1'], req['rating1']
-    # p2, r2 = req['pick2'], req['rating2']
-    # p3, r3 = req['pick3'], req['rating3']
-    # p4, r4 = req['pick4'], req['rating4']
 
-    recommendation = "None"
+    p1, r1 = req['pick1'], req['rating1']
+    p2, r2 = req['pick2'], req['rating2']
+    p3, r3 = req['pick3'], req['rating3']
+    p4, r4 = req['pick4'], req['rating4']
 
-    return jsonify({'recommendation': str(recommendation)})
+    recommendations = "None"
+
+    return jsonify({'recommendations': str(recommendations)})
 
 
 @app.route('/fraud', methods=['GET'])
