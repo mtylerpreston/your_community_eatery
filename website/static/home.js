@@ -3,15 +3,16 @@ $(document).ready(function(){
 	$('#recommend').click(async function(){
     console.log('button was clicked');
 
+
     const pick1 = $('#pick1').val();
     const pick2 = $('#pick2').val();
     const pick3 = $('#pick3').val();
     const pick4 = $('#pick4').val();
-    const rating1 = parseFloat($('#rating1').val());
-    const rating2 = parseFloat($('#rating2').val());
-    const rating3 = parseFloat($('#rating3').val());
-    const rating4 = parseFloat($('#rating4').val());
-    console.log(pick1)
+    const rating1 = document.getElementById("rating1").value;
+    const rating2 = document.getElementById("rating2").value;
+    const rating3 = document.getElementById("rating3").value;
+    const rating4 = document.getElementById("rating4").value;
+
     const data = {
       pick1, 
       rating1,
@@ -30,7 +31,8 @@ $(document).ready(function(){
       contentType: "application/json"
     })
     console.log(response)
-    // $('#mpg').val(response.prediction)
+    $('#recommendations').val(response.recommendations)
+    // $('#recommendations').val('here you go')
 
   })
 })
