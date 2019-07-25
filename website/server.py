@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def home():
-    return render_template('new_home.html')
+    return render_template('home.html')
 
 
 @app.route('/hello', methods=['GET'])
@@ -21,24 +21,21 @@ def hello():
 
 client = a.EventAPIClient()
 
-# model = pickle.load(open('website/lr_model.pkl','rb'))
+# model = pickle.load(open('../models/website/lr_model.pkl', 'rb'))
 
 
-@app.route('/score', methods=['POST'])
-def score():
-    response = client.get_data()
-    processed_response = preprocessing(response)
-    predictions = model.predict_proba(processed_response)
-    lst = []
-    for e, i in enumerate(predictions):
-        if i[1] >= 0.99:
-            lst.append(response.name[e] + ': High risk')
-        elif i[1] >= 0.5:
-            lst.append(response.name[e] + ': Medium risk')
-        else:
-            lst.append(response.name[e] + ': Low risk')
+@app.route('/recommend', methods=['POST'])
+def recommend():
+    req = request.get_json()
 
-    return jsonify({'prediction': str(lst)})
+    p1, r1 = req['pick1'], req['rating1']
+    p2, r2 = req['pick2'], req['rating2']
+    p3, r3 = req['pick3'], req['rating3']
+    p4, r4 = req['pick4'], req['rating4']
+
+    recommendations = "None"
+
+    return jsonify({'recommendations': str(recommendations)})
 
 
 @app.route('/fraud', methods=['GET'])

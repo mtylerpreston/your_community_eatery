@@ -1,49 +1,370 @@
-
-<!-- What the page is called in the tab bar  -->
-<!-- We will add out stylsheet here later -->
-<head>
-    <link rel="stylesheet" href="/static/home.css" />
-    <title> Home Page</title>
-</head>
-
+<!DOCTYPE html>
+<html lang="en-US">
+<title>Your Community Eater Restaur</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+body {font-family: "Times New Roman", Georgia, Serif;}
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Playfair Display";
+  letter-spacing: 5px;
+}
+</style>
 <body>
-  <h1 id='HomeHeader'>Welcome To Our Team: Fraudify!
-    <div style="font-size: 15pt; text-align: center;">Data Driven Fraud Detection</div>
-  </h1>
 
-</p>
-  <p id='HomeHeader2'><span style="font-family: helvetica;font-style: bold; font-size: 23px;">Discover instant benefits:</span><br>
-      - Prevent unnecessary losses due to fraudulent activity <br>
-      - Maximize the impact of your fraud investigation efforts<br>
-      - Improve customer satisfaction with automated approval of low risk events<br>
-  </p>
-      <p style="float: left; font-size: 15pt; text-align: center; width: 10%; margin-left: 20%; margin-right: 2%; margin-bottom: 0.5em;"><img src="https://avatars0.githubusercontent.com/u/28331196?s=460&v=4" style="width: 100%"><a href="https://www.linkedin.com/in/claudio-staub/">Claudio Staub</a></p>
-      <p style="float: left; font-size: 15pt; text-align: center; width: 10%; margin-right: 2%; margin-bottom: 0.5em;"><img src="https://avatars3.githubusercontent.com/u/37880776?s=400&v=4" style="width: 100%"><a href="https://www.linkedin.com/in/1danielvega/">Daniel Vega</a></p>
-      <p style="float: left; font-size: 15pt; text-align: center; width: 10%; margin-right: 2%; margin-bottom: 0.5em;"><img src="https://avatars3.githubusercontent.com/u/46656667?s=400&v=4" style="width: 100%"><a href="https://www.linkedin.com/in/sheng902/">Karen Sheng</a></p>
-      <p style="float: left; font-size: 15pt; text-align: center; width: 10%; margin-right: 2%; margin-bottom: 0.5em;"><img src="https://avatars1.githubusercontent.com/u/49414102?s=400&v=4" style="width: 100%"><a href="https://www.linkedin.com/in/franz-mornau/">Franz Mornau</a></p>
-      <p style="float: left; font-size: 15pt; text-align: center; width: 10%; margin-right: 20%; margin-bottom: 0.5em;"><img src="https://avatars0.githubusercontent.com/u/41130576?s=400&v=4"style="width: 100%"><a href="https://www.linkedin.com/in/tyler-preston-0643ba29/">Tyler Preston</a></p><p style="clear: both;">
-  </p>
-  <div>
-    <p style="font-size: 20pt; text-align: center;">Try out our fraud detector!</p>
-    <li>
-      <a href="https://github.com/karensheng/fraud-detection-case-study.git">GitHub</a>
-    </li>
-    <li>
-      <a href="/fraud">Map</a>
-    </li>
-    <iframe width="700" height="600" frameborder="0" scrolling="no" src="//plot.ly/dashboard/withwithout:371/embed"></iframe><iframe width="700" height="600" frameborder="0" scrolling="no" src="//plot.ly/dashboard/withwithout:370/embed"></iframe>
-	</div>
-  <div id="controls" style="width-left: 20%;width-right:20%;">
-    <div>
-      <label style="font-size: 20pt; text-align: left;">Test the Model</label><br>
-      <button id='prediction'>Predict</button>
+<!-- Navbar (sit on top) -->
+<div class="w3-top">
+  <div class="w3-bar w3-white w3-padding w3-card" style="letter-spacing:4px;">
+    <a href="#home" class="w3-bar-item w3-button">Your Community Eatery</a>
+    <!-- Right-sided navbar links. Hide them on small screens -->
+    <div class="w3-right w3-hide-small">
+      <a href="#about" class="w3-bar-item w3-button">About</a>
+      <a href="#get_recommendations" class="w3-bar-item w3-button">Get Recommendations</a>
+      <a href="#results" class="w3-bar-item w3-button">Results</a>
+      <a href="#user_profiles" class="w3-bar-item w3-button">User Profiles</a>
     </div>
-        <div>
-        <input id='output' type='text' readonly/>
-      </div>
   </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/1.35.2/plotly.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="/static/home.js"></script>
+</div>
+
+<!-- Header -->
+<header class="w3-display-container w3-content w3-wide" style="max-width:1600px;min-width:500px" id="home">
+  <img src="/static/images/header_img.jpeg" alt="Plating" width="1600" height="800">
+  <div class="w3-display-bottomleft w3-padding-large w3-opacity">
+    <h1 class="w3-xxlarge">Recommending Restaurants and Creating User Profiles</h1>
+  </div>
+</header>
+
+<!-- Page content -->
+<div class="w3-content" style="max-width:1100px">
+
+  <!-- About Section -->
+  <div class="w3-row w3-padding-64" id="about">
+    <div class="w3-col m6 w3-padding-large w3-hide-small">
+     <img src="/static/images/plating.jpg" class="w3-round w3-image w3-opacity-min" alt="Table Setting" width="600" height="750">
+    </div>
+
+    <div class="w3-col m6 w3-padding-large">
+      <h1 class="w3-center">About This Project</h1><br>
+      <h5 class="w3-center">Tradition since 1889</h5>
+      <p class="w3-large">We are going to explain the project<span class="w3-tag w3-light-grey">right here</span> just in case you were wondering.</p>
+      <p class="w3-large w3-text-grey w3-hide-medium">Put some more stuff here that explains the project</p>
+    </div>
+  </div>
+  
+  <hr>
+  
+  <!-- Recommendations Section -->
+  <div class="w3-row w3-padding-16" id="get_recommendations">
+    <div class="w3-col l6 w3-padding-small">
+      <h1 class="w3-center">Recommendations</h1><br>
+      <h4>Please rate four restaurants:</h4>
+      <p>(Think of the rating as you would the number of stars that you give a restaurant as a review on Yelp. They can all be 5's or 1's or any combination.)</p>
+
+      <!-- Drop down selection for retaurants - Pick 1-->
+
+        <select id="pick1">
+
+          <!-- Low prices $ -->
+          <option value="the_stand">The Stand</option>
+          <option value="chickfila">Chick-fil-A</option>
+          <option value="in_n_out_burger">In-N-Out Burger</option>
+          <option value="shake_shack">Shake Shack</option>
+          <option value="whataburger">Whataburger</option>
+          <option value="firehouse_subs">Firehouse Subs</option>
+
+          <!-- Moderate prices $$ -->
+          <option value="the_arrogant_butcher">The Arrogant Butcher</option>
+          <option value="the_dressing_room">The Dressing Room</option>
+          <option value="pizzeria_bianco">Pizzeria Bianco</option>
+          <option value="angels_trumpet_ale_house">Angels Trumpet Ale House</option>
+          <option value="citizen_public_house">Citizen Public House</option>
+          <option value="roaring_fork">Roaring Fork</option>
+          <option value="sophias_kitchen">Sophia's Kitchen</option>
+
+          <!-- pricy restaurants $$$ -->
+          <option value="hearth_61">Hearth '61</option>
+          <option value="durants">Durant's</option>
+          <option value="steak_44">Steak 44</option>
+          <option value="buck&rider">Buck & Rider</option>
+          <option value="avanti">Avanti</option>
+   
+
+          <!-- ultra-high-end restaurants $$$ -->
+          <option value="cafe_monarch">Cafe Monarch</option>
+          <option value="sel">Sel</option>
+          <option value="binkleys_restaurant">Binkley's Restaurant</option>
+          <option value="mastros_city_hall">Mastro's City Hall</option>
+          <option value="dominicks_steakhouse">Dominick's Steakhouse</option>
+          <option value="bourbon_steak">Bourbon Steak</option>
+          <option value="mortons_the_steakhouse">Morton's The Steakhouse</option>
+        </select>
+
+
+          <label>
+            <input type="radio" id='rating1' value="1" style='margin-left: 24px'/> 1 
+          </label>
+          <label>
+              <input type="radio" id='rating1' value="2" style='margin-left: 8px'/> 2     
+          </label>
+          <label>
+              <input type="radio" id='rating1' value="3" style='margin-left: 8px'/> 3  
+          </label>
+          <label>
+              <input type="radio" id='rating1' value="4" style='margin-left: 8px'/> 4     
+          </label>
+          <label>
+              <input type="radio" id='rating1' value="5" style='margin-left: 8px'/> 5  
+          </label>
+
+        <br><br>
+
+      <!-- Drop down selection for retaurants - Pick 2-->
+        <select id="pick2">
+
+          <!-- Low prices $ -->
+          <option value="the_stand">The Stand</option>
+          <option value="chickfila">Chick-fil-A</option>
+          <option value="in_n_out_burger">In-N-Out Burger</option>
+          <option value="shake_shack">Shake Shack</option>
+          <option value="whataburger">Whataburger</option>
+          <option value="firehouse_subs">Firehouse Subs</option>
+
+          <!-- Moderate prices $$ -->
+          <option value="the_arrogant_butcher">The Arrogant Butcher</option>
+          <option value="the_dressing_room">The Dressing Room</option>
+          <option value="pizzeria_bianco">Pizzeria Bianco</option>
+          <option value="angels_trumpet_ale_house">Angels Trumpet Ale House</option>
+          <option value="citizen_public_house">Citizen Public House</option>
+          <option value="roaring_fork">Roaring Fork</option>
+          <option value="sophias_kitchen">Sophia's Kitchen</option>
+
+          <!-- pricy restaurants $$$ -->
+          <option value="hearth_61">Hearth '61</option>
+          <option value="durants">Durant's</option>
+          <option value="steak_44">Steak 44</option>
+          <option value="buck&rider">Buck & Rider</option>
+          <option value="avanti">Avanti</option>
+   
+
+          <!-- ultra-high-end restaurants $$$ -->
+          <option value="cafe_monarch">Cafe Monarch</option>
+          <option value="sel">Sel</option>
+          <option value="binkleys_restaurant">Binkley's Restaurant</option>
+          <option value="mastros_city_hall">Mastro's City Hall</option>
+          <option value="dominicks_steakhouse">Dominick's Steakhouse</option>
+          <option value="bourbon_steak">Bourbon Steak</option>
+          <option value="mortons_steakhouse">Morton's Steakhouse</option>
+        </select>
+
+        <label>
+          <input type="radio" id="rating2" value="1" style='margin-left: 24px'/> 1 
+        </label>
+        <label>
+            <input type="radio" id="rating2" value="2" style='margin-left: 8px'/> 2     
+        </label>
+        <label>
+            <input type="radio" id="rating2" value="3" style='margin-left: 8px'/> 3  
+        </label>
+        <label>
+            <input type="radio" id="rating2" value="4" style='margin-left: 8px'/> 4     
+        </label>
+        <label>
+            <input type="radio" id="rating2" value="5" style='margin-left: 8px'/> 5  
+        </label>
+
+        <br><br>
+
+      <!-- Drop down selection for retaurants - Pick 3-->
+
+        <select id="pick3">
+
+          <!-- Low prices $ -->
+          <option value="the_stand">The Stand</option>
+          <option value="chickfila">Chick-fil-A</option>
+          <option value="in_n_out_burger">In-N-Out Burger</option>
+          <option value="shake_shack">Shake Shack</option>
+          <option value="whataburger">Whataburger</option>
+          <option value="firehouse_subs">Firehouse Subs</option>
+
+          <!-- Moderate prices $$ -->
+          <option value="the_arrogant_butcher">The Arrogant Butcher</option>
+          <option value="the_dressing_room">The Dressing Room</option>
+          <option value="pizzeria_bianco">Pizzeria Bianco</option>
+          <option value="angels_trumpet_ale_house">Angels Trumpet Ale House</option>
+          <option value="citizen_public_house">Citizen Public House</option>
+          <option value="roaring_fork">Roaring Fork</option>
+          <option value="sophias_kitchen">Sophia's Kitchen</option>
+
+          <!-- pricy restaurants $$$ -->
+          <option value="hearth_61">Hearth '61</option>
+          <option value="durants">Durant's</option>
+          <option value="steak_44">Steak 44</option>
+          <option value="buck&rider">Buck & Rider</option>
+          <option value="avanti">Avanti</option>
+   
+
+          <!-- ultra-high-end restaurants $$$ -->
+          <option value="cafe_monarch">Cafe Monarch</option>
+          <option value="sel">Sel</option>
+          <option value="binkleys_restaurant">Binkley's Restaurant</option>
+          <option value="mastros_city_hall">Mastro's City Hall</option>
+          <option value="dominicks_steakhouse">Dominick's Steakhouse</option>
+          <option value="bourbon_steak">Bourbon Steak</option>
+          <option value="mortons_steakhouse">Morton's Steakhouse</option>
+        </select>
+
+        <label>
+          <input type="radio" id="rating3" value="1" style='margin-left: 24px'/> 1 
+        </label>
+        <label>
+            <input type="radio" id="rating3" value="2" style='margin-left: 8px'/> 2     
+        </label>
+        <label>
+            <input type="radio" id="rating3" value="3" style='margin-left: 8px'/> 3  
+        </label>
+        <label>
+            <input type="radio" id="rating3" value="4" style='margin-left: 8px'/> 4     
+        </label>
+        <label>
+            <input type="radio" id="rating3" value="5" style='margin-left: 8px'/> 5  
+        </label>
+
+        <br><br>
+
+      <!-- Drop down selection for retaurants - Pick 4-->
+
+        <select id="pick4" style='width: 190px'>
+
+          <!-- Low prices $ -->
+          <option value="the_stand">The Stand</option>
+          <option value="chickfila">Chick-fil-A</option>
+          <option value="in_n_out_burger">In-N-Out Burger</option>
+          <option value="shake_shack">Shake Shack</option>
+          <option value="whataburger">Whataburger</option>
+          <option value="firehouse_subs">Firehouse Subs</option>
+
+          <!-- Moderate prices $$ -->
+          <option value="the_arrogant_butcher">The Arrogant Butcher</option>
+          <option value="the_dressing_room">The Dressing Room</option>
+          <option value="pizzeria_bianco">Pizzeria Bianco</option>
+          <option value="angels_trumpet_ale_house">Angels Trumpet Ale House</option>
+          <option value="citizen_public_house">Citizen Public House</option>
+          <option value="roaring_fork">Roaring Fork</option>
+          <option value="sophias_kitchen">Sophia's Kitchen</option>
+          <option value="pig&pickle">Pig & Pickle (closed but useful)</option>
+          <option value="little_miss_bbq">Little Miss BBQ</option>
+          <option value="the_arrogant_butcher">The Arrogant Butcher</option>
+
+          <!-- pricy restaurants $$$ -->
+          <option value="hearth_61">Hearth '61</option>
+          <option value="durants">Durant's</option>
+          <option value="steak_44">Steak 44</option>
+          <option value="buck&rider">Buck & Rider</option>
+          <option value="avanti">Avanti</option>
+   
+
+          <!-- ultra-high-end restaurants $$$ -->
+          <option value="cafe_monarch">Cafe Monarch</option>
+          <option value="sel">Sel</option>
+          <option value="binkleys_restaurant">Binkley's Restaurant</option>
+          <option value="mastros_city_hall">Mastro's City Hall</option>
+          <option value="dominicks_steakhouse">Dominick's Steakhouse</option>
+          <option value="bourbon_steak">Bourbon Steak</option>
+          <option value="mortons_steakhouse">Morton's Steakhouse</option>
+
+        </select>
+
+        <label>
+          <input type="radio" id="rating4" value="1" style='margin-left: 24px'/> 1 
+        </label>
+        <label>
+            <input type="radio" id="rating4" value="2" style='margin-left: 8px'/> 2     
+        </label>
+        <label>
+            <input type="radio" id="rating4" value="3" style='margin-left: 8px'/> 3  
+        </label>
+        <label>
+            <input type="radio" id="rating4" value="4" style='margin-left: 8px'/> 4     
+        </label>
+        <label>
+            <input type="radio" id="rating4" value="5" style='margin-left: 8px'/> 5  
+        </label>
+
+        <br><br>
+        <h4>Your recommendations await:</h4>
+        <button id="recommend">Get Recommendations</button>
+        <!-- <input type="submit" id='recommend' style="font-size: 15pt; text-align: center" value="Get Recommendations"> -->
+        <!-- <input type="submit"> -->
+
+
+      <p class="w3-text-grey">Put top 3 recs here</p><br>
+      <textarea id='recommendations' type='text' readonly></textarea>
+      
+    </div>
+    
+    <div class="w3-col l6 w3-padding-large">
+      <img src="/static/images/delicacy.jpg" class="w3-round w3-image w3-opacity-min" alt="recommender" style="width:125%">
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Results Section -->
+  <div class="w3-row w3-padding-64" id="results">
+
+    <div class="w3-col l6 w3-padding-large">
+      <img src="/static/images/cookies.jpg" class="w3-round w3-image w3-opacity-min" alt="Menu" style="width:100%">
+    </div>
+    <div class="w3-col l6 w3-padding-large">
+      <h1 class="w3-center">Results</h1><br>
+      <h4>Some results regaring model prediction performance...</h4>
+      <p class="w3-text-grey">Put some visualizations of model performance</p><br>
+    
+      <h4></h4>
+      <p class="w3-text-grey"></p><br>
+    
+
+      <h4>Or something else about how well it predicts</h4>
+      <p class="w3-text-grey">Maybe allude to the clusters now...</p><br>
+      
+    </div>
+    
+  </div>
+
+  <hr>
+
+  <!-- Profiling Section -->
+  <div class="w3-row w3-padding-64" id="user_profiles">
+    <div class="w3-col l6 w3-padding-large">
+      <h1 class="w3-center">Unveiling User Profiles</h1><br>
+      <h4>Some results regarding model prediction performance...</h4>
+      <p class="w3-text-grey">Put some visualizations of model performance</p><br>
+    
+      <h4></h4>
+      <p class="w3-text-grey"></p><br>
+    
+
+      <h4>Or something else about how well it predicts</h4>
+      <p class="w3-text-grey">Maybe allude to the clusters now...</p><br>
+      
+    </div>
+    
+    <div class="w3-col l6 w3-padding-large">
+      <img src="/static/images/kitchen_plating.jpg" class="w3-round w3-image w3-opacity-min" alt="Menu" style="width:100%">
+    </div>
+  </div>
+
+  <hr>
+  
+<!-- End page content -->
+</div>
+
+<!-- Footer -->
+<footer class="w3-center w3-light-grey w3-padding-32">
+  <p>An <a href="https://github.com/mtylerpreston" title="Tyler Preston Github" target="_blank" class="w3-hover-text-green">M. Tyler Preston</a> Project</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="static/home.js"></script>
 </body>
 </html>

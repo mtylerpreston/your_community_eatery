@@ -23,7 +23,7 @@ import pickle
 # Housekeeping
 from io import StringIO
 
-test = False
+test = True
 
 print('Reading file')
 df = pd.read_json('../data/trimmed_df.json', orient='records')
@@ -60,21 +60,22 @@ df = None
 reader = Reader(rating_scale=(1, 5))
 data = Dataset.load_from_df(train_df, reader)
 
-all_predictions = []
-all_ratings = []
+sim_options = {'user_based': [False]}
+
+results = []
 
 # Iterate over all algorithms
 for algorithm in [
         SVD(),
-        surprise.SlopeOne(),
         surprise.NMF(),
+        surprise.SlopeOne(),
+        surprise.CoClustering(),
+        surprise.KNNBasic(sim_options=sim_options),
+        surprise.KNNWithMeans(sim_options=sim_options),
+        surprise.KNNWithZScore(sim_options=sim_options),
+        surprise.KNNBaseline(sim_options=sim_options),
         surprise.NormalPredictor(),
-        surprise.BaselineOnly(),
-        surprise.CoClustering()]:
-
-    # Take a look at cross validation results to compare model types
-    print('Modeling: {}'.format(str(algorithm)))
-    results = cross_validate(algorithm, data, measures=['RMSE', 'MAE'], cv=5, verbose=True)
+        surprise.BaselineOnly()]:
 
     # Get string of algname for naming a pickle file a useful name
     alg_name = str(algorithm)
@@ -83,7 +84,11 @@ for algorithm in [
     alg_name = alg_name[alg_name.find('.') + 1:]
     alg_name = alg_name[:alg_name.find('object') - 1]
 
-    pickle.dump(results, open("../model_results/{}.pkl".format(alg_name), "wb"))
+    # Take a look at cross validation results to compare model types
+    print('\n\nModeling: {}\n'.format(str(alg_name)))
+    result = cross_validate(algorithm, data, measures=['RMSE'], cv=5, verbose=True)
+    print(result)
+    results.append(result)
 
 
 #     # fit the model
@@ -105,3 +110,5 @@ for algorithm in [
 #     ratings_pkl_file = alg_name + '_ratings.pkl'
 #     pickle.dump(model_predictions, open(pred_pkl_file, 'wb'))
 #     pickle.dump(model_ratings, open(ratings_pkl_file, 'wb'))
+
+pickle.dump(results, open("../model_results/{}.pkl".format(alg_name), "wb"))
