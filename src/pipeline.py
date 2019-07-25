@@ -139,6 +139,11 @@ class YourCommunityEatery:
         selection = self.bus_review_df.date >= threshold
         self.bus_review_df = self.bus_review_df[selection]
 
+    def factorize(self):
+        # Map user and business ids to integers so that Surprise can handle them
+        self.bus_review_df['iid'] = pd.factorize(df.business_id)[0]
+        self.bus_review_df['uid'] = pd.factorize(df.user_id)[0]
+
     def persist_subject_data(self, path='data/bus_review_df'):
         self.bus_review_df.to_json(path + '.json', orient='records')
 
