@@ -99,11 +99,8 @@ class YourCommunityEatery:
 
     def calculate_density(self):
         num_ratings = len(self.bus_review_df.review_id)
-        print('Number of  ratings: {}'.format(num_ratings))
         num_items = self.bus_review_df.business_id.nunique()
-        print('Number of items: {}'.format(num_items))
         num_users = self.bus_review_df.user_id.nunique()
-        print('Number of ratings: {}'.format(num_users))
         return num_ratings / (num_items * num_users)
 
     def filter_low_density_users(self, threshold=4):
@@ -141,8 +138,8 @@ class YourCommunityEatery:
 
     def factorize(self):
         # Map user and business ids to integers so that Surprise can handle them
-        self.bus_review_df['iid'] = pd.factorize(df.business_id)[0]
-        self.bus_review_df['uid'] = pd.factorize(df.user_id)[0]
+        self.bus_review_df['iid'] = pd.factorize(self.bus_review_df.business_id)[0]
+        self.bus_review_df['uid'] = pd.factorize(self.bus_review_df.user_id)[0]
 
     def persist_subject_data(self, path='data/bus_review_df'):
         self.bus_review_df.to_json(path + '.json', orient='records')
