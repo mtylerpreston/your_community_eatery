@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-US">
-<title>Your Community Eater Restaur</title>
+<title>Your Community Eatery</title>
+<link rel="shortcut icon" href="static/images/favicon.ico" type="image/x-icon" />
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -58,9 +59,9 @@ h1, h2, h3, h4, h5, h6 {
   <div class="w3-row w3-padding-16" id="get_recommendations">
     <div class="w3-col l6 w3-padding-small">
       <h1 class="w3-center">Recommendations</h1><br>
-      <h4>Please rate four restaurants:</h4>
-      <p>(Think of the rating as you would the number of stars that you give a restaurant as a review on Yelp. They can all be 5's or 1's or any combination.)</p>
-
+      <h4>Please pick your 4 favorite restaurants:</h4>
+      <p>(Or at least pretend that you are because there is only a short list here)</p>
+      <p>* Restaurants are ordered by ascending degree of price.</p>
       <!-- Drop down selection for retaurants - Pick 1-->
 
         <select id="pick1">
@@ -99,23 +100,6 @@ h1, h2, h3, h4, h5, h6 {
           <option value="bourbon_steak">Bourbon Steak</option>
           <option value="mortons_the_steakhouse">Morton's The Steakhouse</option>
         </select>
-
-
-          <label>
-            <input type="radio" id='rating1' value="1" style='margin-left: 24px'/> 1 
-          </label>
-          <label>
-              <input type="radio" id='rating1' value="2" style='margin-left: 8px'/> 2     
-          </label>
-          <label>
-              <input type="radio" id='rating1' value="3" style='margin-left: 8px'/> 3  
-          </label>
-          <label>
-              <input type="radio" id='rating1' value="4" style='margin-left: 8px'/> 4     
-          </label>
-          <label>
-              <input type="radio" id='rating1' value="5" style='margin-left: 8px'/> 5  
-          </label>
 
         <br><br>
 
@@ -156,22 +140,6 @@ h1, h2, h3, h4, h5, h6 {
           <option value="bourbon_steak">Bourbon Steak</option>
           <option value="mortons_steakhouse">Morton's Steakhouse</option>
         </select>
-
-        <label>
-          <input type="radio" id="rating2" value="1" style='margin-left: 24px'/> 1 
-        </label>
-        <label>
-            <input type="radio" id="rating2" value="2" style='margin-left: 8px'/> 2     
-        </label>
-        <label>
-            <input type="radio" id="rating2" value="3" style='margin-left: 8px'/> 3  
-        </label>
-        <label>
-            <input type="radio" id="rating2" value="4" style='margin-left: 8px'/> 4     
-        </label>
-        <label>
-            <input type="radio" id="rating2" value="5" style='margin-left: 8px'/> 5  
-        </label>
 
         <br><br>
 
@@ -214,22 +182,6 @@ h1, h2, h3, h4, h5, h6 {
           <option value="mortons_steakhouse">Morton's Steakhouse</option>
         </select>
 
-        <label>
-          <input type="radio" id="rating3" value="1" style='margin-left: 24px'/> 1 
-        </label>
-        <label>
-            <input type="radio" id="rating3" value="2" style='margin-left: 8px'/> 2     
-        </label>
-        <label>
-            <input type="radio" id="rating3" value="3" style='margin-left: 8px'/> 3  
-        </label>
-        <label>
-            <input type="radio" id="rating3" value="4" style='margin-left: 8px'/> 4     
-        </label>
-        <label>
-            <input type="radio" id="rating3" value="5" style='margin-left: 8px'/> 5  
-        </label>
-
         <br><br>
 
       <!-- Drop down selection for retaurants - Pick 4-->
@@ -251,7 +203,6 @@ h1, h2, h3, h4, h5, h6 {
           <option value="angels_trumpet_ale_house">Angels Trumpet Ale House</option>
           <option value="citizen_public_house">Citizen Public House</option>
           <option value="roaring_fork">Roaring Fork</option>
-          <option value="sophias_kitchen">Sophia's Kitchen</option>
           <option value="pig&pickle">Pig & Pickle (closed but useful)</option>
           <option value="little_miss_bbq">Little Miss BBQ</option>
           <option value="the_arrogant_butcher">The Arrogant Butcher</option>
@@ -274,22 +225,6 @@ h1, h2, h3, h4, h5, h6 {
           <option value="mortons_steakhouse">Morton's Steakhouse</option>
 
         </select>
-
-        <label>
-          <input type="radio" id="rating4" value="1" style='margin-left: 24px'/> 1 
-        </label>
-        <label>
-            <input type="radio" id="rating4" value="2" style='margin-left: 8px'/> 2     
-        </label>
-        <label>
-            <input type="radio" id="rating4" value="3" style='margin-left: 8px'/> 3  
-        </label>
-        <label>
-            <input type="radio" id="rating4" value="4" style='margin-left: 8px'/> 4     
-        </label>
-        <label>
-            <input type="radio" id="rating4" value="5" style='margin-left: 8px'/> 5  
-        </label>
 
         <br><br>
         <h4>Your recommendations await:</h4>

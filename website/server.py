@@ -28,10 +28,10 @@ client = a.EventAPIClient()
 def recommend():
     req = request.get_json()
 
-    p1, r1 = req['pick1'], req['rating1']
-    p2, r2 = req['pick2'], req['rating2']
-    p3, r3 = req['pick3'], req['rating3']
-    p4, r4 = req['pick4'], req['rating4']
+    p1 = req['pick1']
+    p2 = req['pick2']
+    p3 = req['pick3']
+    p4 = req['pick4']
 
     recommendations = "None"
 
