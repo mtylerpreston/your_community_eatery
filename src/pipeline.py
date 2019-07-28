@@ -144,6 +144,65 @@ class YourCommunityEatery:
     def persist_subject_data(self, path='data/bus_review_df'):
         self.bus_review_df.to_json(path + '.json', orient='records')
 
+    def recommend(self, selections=['In-N-Out Burger', 'Chick-fil-A', 'The Stand', 'Whataburger'], k=3):
+        '''
+        Use the similarity matrix to find most similar restaurants to the four
+        that the user specified in their selections. 
+
+        Params:
+        ~~~~~~~~~~~~
+        similarity_matrix: type - Pandas Dataframe
+        Similarity matrix from our fitted production model
+
+        data_df: type - Pandas Dataframe
+        Dataframe that has all of the pertinent data so that we can ensure we don't 
+        the same chain of restaurants to someone just because they had a different
+        location.
+
+        item_map: type - Dict
+        Dictionary that maps the business_id, name, and i_business_id (for surprise), with
+        business_id as keys, and tupes of name and i_business_id as values.
+
+        n: type - in
+        Number of recommendations to provide
+
+        selections: type - list of strings
+        Names of restaurants that user selected for recommendations.
+        '''
+        # Create new dataframe for holding the vectors of similarities for
+        # the user's selections
+        similarity_matrix = self._compute_similarities()
+
+        item_vectors = pd.DataFrame()
+        for key, val in item_map.items():
+            if val[0] in selections:
+                item_vectors[val[1]] = similarity_matrix.iloc[:, val[1]]
+
+        # Take mean similarity across columns and sort by it to
+        # raise the best picks to the top
+        item_vectors['mean_similarity'] = item_vectors.mean(axis=1)
+        item_vectors.sort_values(by='mean_similarity', ascending=False, inplace=True)
+
+        # Make sure that the picks don't have the same exact name
+        name_mask = data_df.name.isin(selections)
+        picks = item_vectors[~name_mask].index.unique()[:k]
+        print(picks)
+
+    # #     picks = item_vectors[~name_mask].iloc[:n, :].index
+        recs = data_df[['business_id', 'name', 'i_business_id']].drop_duplicates(['i_business_id'])
+        recs = recs[recs.i_business_id.isin(picks)]
+
+        return recs
+
+    def _compute_similarities(self):
+        '''
+        Compute similarity matrix from a fitted model and convert it to a 
+        Pandas Dataframe. Using Pandas won't use any additional memory, and it lends more
+        functionality.
+        '''
+        similarity_matrix = fitted_model.compute_similarities()
+        return pd.DataFrame(similarity_matrix)
+
     def _read_data_spark(self, data_dir_path='data/', desired_data=['business', 'review']):
         '''
         Summary: 
