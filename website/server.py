@@ -1,8 +1,6 @@
 from flask import Flask, render_template, request, jsonify, Response
 import pickle
-from sklearn.ensemble import GradientBoostingClassifier
-from pipeline import preprocessing
-import eventAPI as a
+
 
 # Create the app object that will route our calls
 app = Flask(__name__)
@@ -12,14 +10,6 @@ app = Flask(__name__)
 @app.route('/', methods=['GET'])
 def home():
     return render_template('home.html')
-
-
-@app.route('/hello', methods=['GET'])
-def hello():
-    return 'Hello, World!'
-
-
-client = a.EventAPIClient()
 
 # model = pickle.load(open('../models/website/lr_model.pkl', 'rb'))
 
