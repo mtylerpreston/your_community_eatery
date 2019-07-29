@@ -5,7 +5,7 @@ You know that friend who has such good taste in restaurants that you’ll go any
 
 In the age of AI, why are we still searching for restaurants based on simple, manual attribute filtering and (I almost can’t even say it)...mean star rating? We deserve better than having to sort through countless images and reviews to figure out if an eatery suits our tastes. And restaurants who are actually serving their targetted customers well (even if it’s “subpar” by many people’s standards) deserves better than to be pegged as having a low rating.
 
-Want to try it out? Give it a shot with a demo on our website: http://3.87.4.232:3333. Note, this beta version is currently only available for restaurants in the Phoenix, AZ metropolitan area. 
+Want to try it out? Give it a shot with a demo on our website: http://3.95.33.59:3333. Note, this beta version is currently only available for restaurants in the Phoenix, AZ metropolitan area. 
 
 ### How it works
 Using a power of similarity-based modeling techniques, we are able to quickly and scalably unlock the hidden recommendations from all of the people whose dining preferences match yours (your tribe). 
