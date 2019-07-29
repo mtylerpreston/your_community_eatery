@@ -7,3 +7,4 @@
 .cache
 .mypy_cache
 data/
+website/models/KNNBaseline_similarities.pkl

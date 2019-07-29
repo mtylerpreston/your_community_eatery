@@ -99,31 +99,28 @@ def get_recs(similarity_matrix, data_df, item_map, n, selections=['In-N-Out Burg
     # the user's selections
     item_vectors = pd.DataFrame()
     for key, val in item_map.items():
-        print('Nothing')
-        print(val[0])
-        print(selections)
-        print()
         if val[0] in selections:
-            print("Match")
-            print(val[0])
-            print(selections)
             item_vectors[val[1]] = similarity_matrix.iloc[:, val[1]]
 
     # Take mean similarity across columns and sort by it to
     # raise the best picks to the top
     item_vectors['mean_similarity'] = item_vectors.mean(axis=1)
     item_vectors.sort_values(by='mean_similarity', ascending=False, inplace=True)
+    picks = item_vectors.index[:n + 2]
 
     # Make sure that the picks don't have the same exact name
-    name_mask = data_df.name.isin(selections)
-    picks = item_vectors[~name_mask].index.unique()[:n]
+    copy_df = data_df.copy(deep=True)
+    mask = copy_df.name.isin(selections)
+    # picks = item_vectors[~name_mask].index.unique()[:n]
+    copy_df = copy_df[~mask]
 
     # Make sure that the picks are open
-    open_mask = data_df.is_open == 1
-    picks = item_vectors[~open_mask].index.unique()[:n]
+    mask = copy_df.is_open == 1
+    # picks = item_vectors[open_mask].index.unique()[:n]
+    copy_df = copy_df[mask]
 
     # picks = item_vectors[~name_mask].iloc[:n, :].index
-    recs = data_df[['business_id', 'name', 'iid']].drop_duplicates(['iid'])
+    recs = copy_df[['business_id', 'name', 'iid']].drop_duplicates(['iid'])
     recs = recs[recs.iid.isin(picks)]
 
     return recs

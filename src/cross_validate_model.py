@@ -31,6 +31,7 @@ train_df['uid'] = df['uid']
 train_df['iid'] = df['iid']
 train_df['review_stars'] = df['review_stars']
 
+
 # Wipe original df to save memory, for now
 df = None
 

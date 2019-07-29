@@ -11,6 +11,8 @@ from pyspark.sql.functions import to_timestamp
 
 from sklearn.model_selection import train_test_split
 
+import pickle
+
 
 class YourCommunityEatery:
     '''
@@ -142,6 +144,8 @@ class YourCommunityEatery:
         self.bus_review_df['uid'] = pd.factorize(self.bus_review_df.user_id)[0]
 
     def persist_subject_data(self, path='data/bus_review_df'):
+        # with open(path + '.pkl', 'wb') as file:
+        #     pickle.dump(self.bus_review_df, file)
         self.bus_review_df.to_json(path + '.json', orient='records')
 
     def recommend(self, selections=['In-N-Out Burger', 'Chick-fil-A', 'The Stand', 'Whataburger'], k=3):
@@ -188,7 +192,7 @@ class YourCommunityEatery:
         picks = item_vectors[~name_mask].index.unique()[:k]
         print(picks)
 
-    # #     picks = item_vectors[~name_mask].iloc[:n, :].index
+        # picks = item_vectors[~name_mask].iloc[:n, :].index
         recs = data_df[['business_id', 'name', 'i_business_id']].drop_duplicates(['i_business_id'])
         recs = recs[recs.i_business_id.isin(picks)]
 
@@ -323,8 +327,12 @@ class YourCommunityEatery:
             # Read the data from json file in chunks
             reader = pd.read_json(file_name, lines=True, chunksize=chunksize)
 
+            num_chunks = sum([1 for _ in reader])
+
+
             self.bus_review_df = pd.DataFrame()
-            for chunk in reader:
+            for idx, chunk in enumerate(reader):
+
                 # Make "star" columns unique on chunk to avoid confusion
                 chunk = chunk.rename(columns={"stars": "review_stars"})
 
@@ -332,6 +340,21 @@ class YourCommunityEatery:
                 # and append it onto the growing self.bus_review_df
                 chunk = self._merge_chunk(chunk)
                 self.bus_review_df = self.bus_review_df.append(chunk)
+
+                progress = idx/num_chunks
+                if progress > .9:
+                    print('90% complete')
+                elif progress > .75:
+                    print('75% complete')
+                elif progress > .5:
+                    print('50% complete')
+                elif progress > .25:
+                    print('25% complete')
+                elif progress > .1:
+                    print('10% complete')
+                elif progress > .05:
+                    print('5% complete')
+
 
     def _merge_chunk(self, chunk):
         # Merge business and review df's
