@@ -23,7 +23,7 @@ h1, h2, h3, h4, h5, h6 {
       <a href="#about" class="w3-bar-item w3-button">About</a>
       <a href="#get_recommendations" class="w3-bar-item w3-button">Get Recommendations</a>
       <a href="#results" class="w3-bar-item w3-button">Results</a>
-      <a href="#user_profiles" class="w3-bar-item w3-button">User Profiles</a>
+      <a href="#conclusions" class="w3-bar-item w3-button">Big Picture</a>
     </div>
   </div>
 </div>
@@ -31,6 +31,7 @@ h1, h2, h3, h4, h5, h6 {
 <!-- Header -->
 <header class="w3-display-container w3-content w3-wide" style="max-width:1600px;min-width:500px" id="home">
   <img src="/static/images/header_img.jpeg" alt="Plating" width="1600" height="800">
+
   <div class="w3-display-bottomleft w3-padding-large w3-opacity">
     <h1 class="w3-xxlarge">Recommending Restaurants and Creating User Profiles</h1>
   </div>
@@ -42,35 +43,37 @@ h1, h2, h3, h4, h5, h6 {
   <!-- About Section -->
   <div class="w3-row w3-padding-64" id="about">
     <div class="w3-col m6 w3-padding-large w3-hide-small">
-     <img src="/static/images/plating.jpg" class="w3-round w3-image w3-opacity-min" alt="Table Setting" width="600" height="750">
+     <img src="/static/images/logo.png" class="w3-round w3-image" alt="Logo" width="400" height="400">
     </div>
 
     <div class="w3-col m6 w3-padding-large">
-      <h1 class="w3-center">About This Project</h1><br>
-      <h5 class="w3-center">Tradition since 1889</h5>
-      <p class="w3-large">We are going to explain the project<span class="w3-tag w3-light-grey">right here</span> just in case you were wondering.</p>
-      <p class="w3-large w3-text-grey w3-hide-medium">Put some more stuff here that explains the project</p>
+      <h1 class="w3-center">About</h1><br>
+      <p class="w3-large">You know that friend who has such good taste in restaurants that you’ll go anywhere they recommend, no questions asked? Well guess what...there are plenty of those people out there and they’re already telling you all of the great places to go. And it just so happens we can harness them with the power of collaborative filtering.</p>
+      <p class="w3-large w3-text-grey w3-hide-medium">In the age of AI, are we really still searching for restaurants based on simple attribute filtering and (I almost can’t even say it)...mean star rating? We deserve better than having to sort through countless images and reviews to figure out if an eatery suits our tastes. And restaurants who happen to be making their target market happy (even if it’s “subpar” by many people’s standards) deserves better than to be pegged as having a low rating. </p>
     </div>
   </div>
   
   <hr>
   
   <!-- Recommendations Section -->
-  <div class="w3-row w3-padding-16" id="get_recommendations">
-    <div class="w3-col l6 w3-padding-small">
+  <div id="get_recommendations">  </div>
+  <br>
+  <div class="w3-row w3-padding-large" >
+    <div class="w3-col l6 w3-padding-large">
       <h1 class="w3-center">Recommendations</h1><br>
       <h4>Please pick your 4 favorite restaurants:</h4>
       <p>(Or at least pretend that you are because there is only a short list here)</p>
+      <p >Also, please note that this is not a price or genre filter (those already exist anyway). The purpose of a recommender is to help identify restaurants that might be new to a user based on similarities to their preferences.</p>
       <p>* Restaurants are ordered by ascending degree of price.</p>
       <!-- Drop down selection for retaurants - Pick 1-->
 
         <select id="pick1">
 
           <!-- Low prices $ -->
+          <option value="In-N-Out Burger">In-N-Out Burger</option>
           <option value="Hungry Howie's Pizza">Hungry Howie's Pizza</option>
           <option value="The Stand">The Stand</option>
           <option value="Chick-fil-A">Chick-fil-A</option>
-          <option value="In-N-Out Burger">In-N-Out Burger</option>
           <option value="Shake Shack">Shake Shack</option>
           <option value="Firehouse Subs">Firehouse Subs</option>
           <option value="ATL Wings">ATL Wings</option>
@@ -108,9 +111,9 @@ h1, h2, h3, h4, h5, h6 {
         <select id="pick2">
 
           <!-- Low prices $ -->
+          <option value="Chick-fil-A">Chick-fil-A</option>
           <option value="In-N-Out Burger">In-N-Out Burger</option>
           <option value="The Stand">The Stand</option>
-          <option value="Chick-fil-A">Chick-fil-A</option>
           <option value="Shake Shack">Shake Shack</option>
           <option value="Firehouse Subs">Firehouse Subs</option>
           <option value="ATL Wings">ATL Wings</option>
@@ -150,8 +153,8 @@ h1, h2, h3, h4, h5, h6 {
         <select id="pick3">
 
           <!-- Low prices $ -->
-          <option value="ATL Wings">ATL Wings</option>
           <option value="The Stand">The Stand</option>
+          <option value="ATL Wings">ATL Wings</option>
           <option value="Chick-fil-A">Chick-fil-A</option>
           <option value="In-N-Out Burger">In-N-Out Burger</option>
           <option value="Shake Shack">Shake Shack</option>
@@ -192,11 +195,11 @@ h1, h2, h3, h4, h5, h6 {
         <select id="pick4" style='width: 190px'>
 
           <!-- Low prices $ -->
+          <option value="Firehouse Subs">Firehouse Subs</option>
           <option value="Chick-fil-A">Chick-fil-A</option>
           <option value="The Stand">The Stand</option>
           <option value="In-N-Out Burger">In-N-Out Burger</option>
           <option value="Shake Shack">Shake Shack</option>
-          <option value="Firehouse Subs">Firehouse Subs</option>
           <option value="ATL Wings">ATL Wings</option>
           <option value="Hungry Howie's Pizza">Hungry Howie's Pizza</option>
 
@@ -230,9 +233,6 @@ h1, h2, h3, h4, h5, h6 {
         <br><br>
         <h4>Your recommendations await:</h4>
         <button id="recommend">Get Recommendations</button>
-        <!-- <input type="submit" id='recommend' style="font-size: 15pt; text-align: center" value="Get Recommendations"> -->
-        <!-- <input type="submit"> -->
-
 
       <p class="w3-text-grey"></p><br>
       <textarea id='recommendations' style='font-size: 15pt; width: 800px; height: 130px;border: 0px; resize: none' type='text'  readonly></textarea>
@@ -240,6 +240,12 @@ h1, h2, h3, h4, h5, h6 {
     </div>
     
     <div class="w3-col l6 w3-padding-large">
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
       <img src="/static/images/delicacy.jpg" class="w3-round w3-image w3-opacity-min" alt="recommender" style="width:125%">
     </div>
   </div>
@@ -249,49 +255,40 @@ h1, h2, h3, h4, h5, h6 {
   <!-- Results Section -->
   <div class="w3-row w3-padding-64" id="results">
 
-    <div class="w3-col l6 w3-padding-large">
+    <!-- <div class="w3-col l6 w3-padding-large">
       <img src="/static/images/cookies.jpg" class="w3-round w3-image w3-opacity-min" alt="Menu" style="width:100%">
+    </div> -->
+    <div class="l6 w3-padding-small">
+      <h1 class="w3-center">Qualitative Review of Recommendations</h1><br>
+      <p class="standard-paragraph" style="font-size: 15pt">While we can look at useful metrics about the performance of a recommender, a true evaluation outside of a production environment requires a bit of subject judgment. As such, we encourage you to play with various combinations of restaurants and check out the results. Of course, we have done quite a bit of this exploration as well and can offer the following results that will save you some time. </p><br>
+      <p class="standard-paragraph" style="font-size: 15pt">The following shows an example of recommendations that we receive when specifying an assortment of lower-cost restaurants that emphasize fast service (several of which are chains). </p>
     </div>
-    <div class="w3-col l6 w3-padding-large">
-      <h1 class="w3-center">Results</h1><br>
-      <h4>Some results regaring model prediction performance...</h4>
-      <p class="w3-text-grey">Put some visualizations of model performance</p><br>
-    
-      <h4></h4>
-      <p class="w3-text-grey"></p><br>
-    
+    <img src="/static/images/low_end_qualitative.png" class="w3-round w3-image" alt="Low End" style="width:100%">
+    <p style="font-size: 15pt">Note this is not a price or genre filter (those already exist anyway). Many of these restaurants receive low ratings, despite the fact that there are people who absolutely prefer these locations. See one user's review of Geno's Giant Slice here:</p>
+    <span class="yelp-review" data-review-id="iWtg46syvAr7TisliCMxZQ" data-hostname="www.yelp.com">Read <a href="https://www.yelp.com/user_details?userid=-24mXOkdibrJmDpU385jRA" rel="nofollow noopener">Steve C.</a>'s <a href="https://www.yelp.com/biz/genos-giant-slice-mesa-3?hrid=iWtg46syvAr7TisliCMxZQ" rel="nofollow noopener">review</a> of <a href="https://www.yelp.com/biz/2RNrD93tdvv691deX3vpWQ" rel="nofollow noopener">Geno's Giant Slice</a> on <a href="https://www.yelp.com" rel="nofollow noopener">Yelp</a><script async="async" src="https://www.yelp.com/embed/widgets.js" type="text/javascript"></script></span>
 
-      <h4>Or something else about how well it predicts</h4>
-      <p class="w3-text-grey">Maybe allude to the clusters now...</p><br>
-      
-    </div>
-    
+    <p style="font-size: 15pt">The following shows an example of recommendations that we receive when specifying an assortment of high-end restaurants. Note that the recommender is not a price or category filter. It is simply making recommendations based on patterns of reviews. People who eat at expensive restaurants also eat at more moderately priced places of varying genres. You simply get access to seeing which types they tend to choose.</p>
+    <img src="/static/images/high_end_qualitative.png" class="w3-round w3-image" alt="High End" style="width:100%">
+    <p style="font-size: 15pt">Here we can clearly identify a trend of preferences for that certain something special, despite the fact that the recommendations may not be nearly as pricy.</p>
   </div>
 
   <hr>
 
-  <!-- Profiling Section -->
-  <div class="w3-row w3-padding-64" id="user_profiles">
-    <div class="w3-col l6 w3-padding-large">
-      <h1 class="w3-center">Unveiling User Profiles</h1><br>
-      <h4>Some results regarding model prediction performance...</h4>
-      <p class="w3-text-grey">Put some visualizations of model performance</p><br>
-    
-      <h4></h4>
-      <p class="w3-text-grey"></p><br>
-    
+  <!-- Results Section -->
+  <div class="w3-row w3-padding-64" id="conclusions">
 
-      <h4>Or something else about how well it predicts</h4>
-      <p class="w3-text-grey">Maybe allude to the clusters now...</p><br>
-      
+    <!-- <div class="w3-col l6 w3-padding-large">
+      <img src="/static/images/cookies.jpg" class="w3-round w3-image w3-opacity-min" alt="Menu" style="width:100%">
+    </div> -->
+    <div class="l6 w3-padding-large">
+      <h1 class="w3-center">Big Picture</h1><br>
+      <p class="standard-paragraph" style="font-size: 15pt">Utilizing recommenders for restaurants could unlock a whole new level of information for consumers. All stakeholders win in this scenario. The customers get recommendations tailored to them, reducing the time needed for research and finding new locations they might otherwise miss. Restaurants aren't penalized for doing what they do best with a low rating, but if their piece of the market isn't quite as large as others, they can make changes as they see fit. Increased customer engagement will drive more dining and therefore greater revenue for restaurants. And the recommending company constantly builds its dataset from which it can derive value, specifically a revenue stream for optimizing marketing for restaurants based on user profiles.</p>
+      <br>
     </div>
-    
-    <div class="w3-col l6 w3-padding-large">
-      <img src="/static/images/kitchen_plating.jpg" class="w3-round w3-image w3-opacity-min" alt="Menu" style="width:100%">
-    </div>
+
+
   </div>
 
-  <hr>
   
 <!-- End page content -->
 </div>
