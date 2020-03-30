@@ -4,10 +4,10 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 import os
 
-import pyspark as ps
-import pyspark.sql.types as types
-from pyspark.sql.functions import col, countDistinct
-from pyspark.sql.functions import to_timestamp
+# import pyspark as ps
+# import pyspark.sql.types as types
+# from pyspark.sql.functions import col, countDistinct
+# from pyspark.sql.functions import to_timestamp
 
 from sklearn.model_selection import train_test_split
 
