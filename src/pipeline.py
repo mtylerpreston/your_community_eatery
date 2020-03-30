@@ -143,10 +143,10 @@ class YourCommunityEatery:
         self.bus_review_df['iid'] = pd.factorize(self.bus_review_df.business_id)[0]
         self.bus_review_df['uid'] = pd.factorize(self.bus_review_df.user_id)[0]
 
-    def persist_subject_data(self, path='data/bus_review_df'):
+    def persist_subject_data(self, path='data/bus_review_df.json'):
         # with open(path + '.pkl', 'wb') as file:
         #     pickle.dump(self.bus_review_df, file)
-        self.bus_review_df.to_json(path + '.json', orient='records')
+        self.bus_review_df.to_json(path, orient='records')
 
     def recommend(self, selections=['In-N-Out Burger', 'Chick-fil-A', 'The Stand', 'Whataburger'], k=3):
         '''
@@ -296,7 +296,7 @@ class YourCommunityEatery:
             > drop nan rows > query to restaurants in AZ
         '''
         for item in desired_data:
-            file_name = data_dir_path + item + '.json'
+            file_name = data_dir_path + 'yelp_academic_dataset_' + item + '.json'
 
             if item == 'business':
 
@@ -320,40 +320,23 @@ class YourCommunityEatery:
                 # Not deployed in this project
                 print('Reading tip data...')
                 self.tip_df = pd.read_json(file_name, lines=True)
+            elif item == 'review':
+                # As of July 2019, this is specifically built for the use on this project
+                print('Reading review data...')
+                # Read the data from json file in chunks
+                reader = pd.read_json(file_name, lines=True, chunksize=chunksize)
 
-        if 'review' in desired_data:
-            # As of July 2019, this is specifically built for the use on this project
-            print('Reading review data...')
-            # Read the data from json file in chunks
-            reader = pd.read_json(file_name, lines=True, chunksize=chunksize)
+                self.bus_review_df = pd.DataFrame()
+                for idx, chunk in enumerate(reader):
+                    if idx % 10 == 0:
+                        print(f'{idx/85}% complete')
+                    # Make "star" columns unique on chunk to avoid confusion
+                    chunk = chunk.rename(columns={"stars": "review_stars"})
 
-            num_chunks = sum([1 for _ in reader])
-
-
-            self.bus_review_df = pd.DataFrame()
-            for idx, chunk in enumerate(reader):
-
-                # Make "star" columns unique on chunk to avoid confusion
-                chunk = chunk.rename(columns={"stars": "review_stars"})
-
-                # Merge chunk onto filtered business_df returning a chunk of bus_review_df
-                # and append it onto the growing self.bus_review_df
-                chunk = self._merge_chunk(chunk)
-                self.bus_review_df = self.bus_review_df.append(chunk)
-
-                progress = idx/num_chunks
-                if progress > .9:
-                    print('90% complete')
-                elif progress > .75:
-                    print('75% complete')
-                elif progress > .5:
-                    print('50% complete')
-                elif progress > .25:
-                    print('25% complete')
-                elif progress > .1:
-                    print('10% complete')
-                elif progress > .05:
-                    print('5% complete')
+                    # Merge chunk onto filtered business_df returning a chunk of bus_review_df
+                    # and append it onto the growing self.bus_review_df
+                    chunk = self._merge_chunk(chunk)
+                    self.bus_review_df = self.bus_review_df.append(chunk)
 
 
     def _merge_chunk(self, chunk):
@@ -386,7 +369,9 @@ class YourCommunityEatery:
         self.business_df = self.business_df[~self.business_df.categories.isnull()]
 
         # Filter business_df down to only businesses in Arizona
-        self.business_df = self.business_df[self.business_df.state == self.state]
+        if self.state is not None:
+            self.business_df = self.business_df[self.business_df.state == self.state]
+
         # Filter business_df down to only businesses of desired type
         self.business_df = self.business_df[self.business_df.categories.str.contains(self.business_type)]
 
