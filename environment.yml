@@ -117,5 +117,13 @@ dependencies:
   - zeromq=4.3.1=h0a44026_3
   - zipp=2.2.0=py_0
   - zlib=1.2.11=h0b31af3_1006
+  - pip:
+    - beautifulsoup4==4.8.2
+    - click==7.1.1
+    - futures==3.1.1
+    - goslate==1.5.1
+    - pydictionary==1.5.2
+    - soupsieve==2.0
+    - urbandict==0.6.1
 prefix: /Users/Tyler/anaconda3/envs/yelp
 

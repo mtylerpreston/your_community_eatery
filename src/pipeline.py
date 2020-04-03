@@ -328,8 +328,8 @@ class YourCommunityEatery:
 
                 self.bus_review_df = pd.DataFrame()
                 for idx, chunk in enumerate(reader):
-                    if idx % 10 == 0:
-                        print(f'{idx/85}% complete')
+                    if idx+1 % 10 == 0:
+                        print(f'{idx/85:.0f}% complete')
                     # Make "star" columns unique on chunk to avoid confusion
                     chunk = chunk.rename(columns={"stars": "review_stars"})
 
@@ -337,6 +337,7 @@ class YourCommunityEatery:
                     # and append it onto the growing self.bus_review_df
                     chunk = self._merge_chunk(chunk)
                     self.bus_review_df = self.bus_review_df.append(chunk)
+                print('Review data reading complete')
 
 
     def _merge_chunk(self, chunk):
