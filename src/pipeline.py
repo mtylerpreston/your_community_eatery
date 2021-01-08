@@ -9,6 +9,11 @@ import pyspark.sql.types as types
 from pyspark.sql.functions import col, countDistinct
 from pyspark.sql.functions import to_timestamp
 
+from surprise import SVD
+import surprise
+from surprise import Dataset, Reader
+from surprise.model_selection import cross_validate, train_test_split
+
 from sklearn.model_selection import train_test_split
 
 import pickle
@@ -148,6 +153,23 @@ class YourCommunityEatery:
         #     pickle.dump(self.bus_review_df, file)
         self.bus_review_df.to_json(path + '.json', orient='records')
 
+    def train_model(self, model_type=surprise.KNNBaseline, test=False):
+        '''
+        Fit a model from the Surprise library
+        '''
+        # take a small sample for testing
+        if test:
+            df = df.iloc[:10000, :]
+
+        # Build the item map for our recommender and pickle it into website directory
+        print('Building item map...')
+        item_map = _build_item_map(df)
+        with open('../website/models/item_map.pkl', 'wb') as file:
+            pickle.dump(item_map, file)
+
+
+
+
     def recommend(self, selections=['In-N-Out Burger', 'Chick-fil-A', 'The Stand', 'Whataburger'], k=3):
         '''
         Use the similarity matrix to find most similar restaurants to the four
@@ -193,8 +215,8 @@ class YourCommunityEatery:
         print(picks)
 
         # picks = item_vectors[~name_mask].iloc[:n, :].index
-        recs = data_df[['business_id', 'name', 'i_business_id']].drop_duplicates(['i_business_id'])
-        recs = recs[recs.i_business_id.isin(picks)]
+        recs = data_df[['business_id', 'name', 'iid']].drop_duplicates(['iid'])
+        recs = recs[recs.iid.isin(picks)]
 
         return recs
 
@@ -329,7 +351,6 @@ class YourCommunityEatery:
 
             num_chunks = sum([1 for _ in reader])
 
-
             self.bus_review_df = pd.DataFrame()
             for idx, chunk in enumerate(reader):
 
@@ -341,7 +362,7 @@ class YourCommunityEatery:
                 chunk = self._merge_chunk(chunk)
                 self.bus_review_df = self.bus_review_df.append(chunk)
 
-                progress = idx/num_chunks
+                progress = idx / num_chunks
                 if progress > .9:
                     print('90% complete')
                 elif progress > .75:
@@ -354,7 +375,6 @@ class YourCommunityEatery:
                     print('10% complete')
                 elif progress > .05:
                     print('5% complete')
-
 
     def _merge_chunk(self, chunk):
         # Merge business and review df's
@@ -389,6 +409,78 @@ class YourCommunityEatery:
         self.business_df = self.business_df[self.business_df.state == self.state]
         # Filter business_df down to only businesses of desired type
         self.business_df = self.business_df[self.business_df.categories.str.contains(self.business_type)]
+
+    def _build_item_map(self):
+        '''
+        Takes in a dataframe with fields business_id, name, and i_business_id (the item
+        number for surprise), and returns a dictionary with business_id's as keys and
+        tuples containing the name and i_business_id as values based on the subset of
+        restaurants that were selected for the website demo. These restaurants were
+        hard coded specifically for this implementation of the website.
+        '''
+        business_ids = [_choose_max_arg('The Stand'),
+                        _choose_max_arg('In-N-Out'),
+                        _choose_max_arg('Shake Shack'),
+                        _choose_max_arg('Chick-fil-A'),
+                        _choose_max_arg('ATL Wings'),
+                        _choose_max_arg('Firehouse'),
+                        _choose_max_arg("Hungry Howie"),
+                        _choose_max_arg('Buffalo Wild Wings'),
+                        _choose_max_arg('Arrogant'),
+                        _choose_max_arg('Dressing Room'),
+                        _choose_max_arg('Pizzeria Bianco'),
+                        _choose_max_arg('Angels Trumpet'),
+                        _choose_max_arg('Citizen Public'),
+                        _choose_max_arg("Hearth '61"),
+                        _choose_max_arg('Durant'),
+                        _choose_max_arg('Steak 44'),
+                        _choose_max_arg('Buck & Rider'),
+                        _choose_max_arg('Avanti'),
+                        _choose_max_arg('Cafe Monarch'),
+                        _choose_max_arg('Sel', match=True),
+                        _choose_max_arg("Binkley's Restaurant"),
+                        _choose_max_arg("Mastro's City Hall"),
+                        _choose_max_arg("Dominick's Steakhouse"),
+                        _choose_max_arg('Bourbon Steak'),
+                        _choose_max_arg("Morton's The Steakhouse")]
+
+        names = df.name[df.business_id.isin(business_ids)].unique()
+        iids = df.iid[df.business_id.isin(business_ids)].unique()
+
+        item_map = {}
+        for item in business_ids:
+            item_map[item] = (df.name[df.business_id.str.match(item)].unique()[0],
+                              df.iid[df.business_id.str.match(item)].unique()[0])
+
+        return item_map
+
+    def _choose_max_arg(self, item_name, match=False):
+        '''
+        Some item names may be the same for separate item entities
+        (such as a restaurant chain with multiple locations). And
+        within the data, some of those specific entities may have 
+        many more reviews than others. To give our model the best chance,
+        we pick the location with the most reviews ("choose the max argument")
+
+        Params:
+        ~~~~~~~~~~~~~~~~~~
+        Item name: type - String
+        The subject item name that may represent multiple entities within
+        the set of items
+
+        Returns:
+        ~~~~~~~~~~~~~~~~~~
+        The index of the entity matching the item name that has the most
+        reviews.
+        '''
+        if match:
+            mask = self.bus_review_df.name.str.match(item_name)
+        else:
+            mask = self.bus_review_df.name.str.contains(item_name)
+        max_val = self.bus_review_df[mask].groupby('business_id').count().max()
+        _ = self.bus_review_df[mask].groupby('business_id').count() == max_val
+        new_mask = _.iid
+        return _[new_mask].index[0]
 
 
 if __name__ == '__main__':
